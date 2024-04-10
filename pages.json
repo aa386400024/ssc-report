@@ -1,0 +1,586 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uni_modules/uview-plus/components/u-$1/u-$1.vue"
+	},
+	"pages": [{
+			"path": "pages/home/index",
+			"name": "home",
+			"style": {
+				"navigationBarTitleText": "报告",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/practice/index",
+			"name": "practice",
+			"style": {
+				"navigationBarTitleText": "发现",
+				"enablePullDownRefresh": false
+			}
+		},{
+			"path": "pages/my/my",
+			"name": "my",
+			"style": {
+				"navigationBarTitleText": "我",
+				"enablePullDownRefresh": false
+			}
+		},
+		// {
+		// 	"path": "pages/list/list",
+		// 	"style": {
+		// 		// // #ifndef APP-PLUS
+		// 		// "enablePullDownRefresh": true,
+		// 		// // #endif
+		// 		// "navigationStyle": "custom"
+		// 	}
+		// },
+		{
+			"path": "pages/grid/grid",
+			"style": {
+				//#ifndef MP
+				"navigationStyle": "custom"
+				//#endif
+			}
+		}, {
+			"path": "pages/list/search/search",
+			"style": {
+				"navigationBarTitleText": "搜索"
+			}
+		}, {
+			"path": "pages/list/detail",
+			"style": {
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"type": "share"
+						}],
+						"type": "transparent"
+					}
+				},
+				"h5": {
+					"titleNView": {
+						"type": "transparent"
+					}
+				},
+				"navigationBarTitleText": "文章详情"
+			}
+		},
+		{
+			"path": "pages/ucenter/ucenter",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/uni-agree/uni-agree",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"popGesture": "none"
+				}
+			}
+		}, {
+			"path": "pages/ucenter/settings/settings",
+			"style": {
+				"navigationBarTitleText": "设置"
+			}
+		},
+		{
+			"path": "pages/ucenter/read-news-log/read-news-log",
+			"style": {
+				"navigationBarTitleText": "阅读记录",
+				"enablePullDownRefresh": true
+			}
+		}
+		// #ifdef APP-PLUS
+		, {
+			"path": "pages/ucenter/about/about",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"type": "share"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "uni_modules/uni-upgrade-center-app/pages/upgrade-popup",
+			"style": {
+				"disableScroll": true,
+				"app-plus": {
+					"backgroundColorTop": "transparent",
+					"background": "transparent",
+					"titleNView": false,
+					"scrollIndicator": false,
+					"popGesture": "none",
+					"animationType": "fade-in",
+					"animationDuration": 200
+
+				}
+			}
+		},
+		{
+			"path": "pages/ucenter/invite/invite",
+			"style": {
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		}
+		// #endif
+		, {
+			"path": "uni_modules/uni-pay/pages/success/success",
+			"style": {
+				"backgroundColor": "#F8F8F8",
+				"navigationBarTitleText": "支付成功"
+			}
+		}, {
+			"path": "uni_modules/uni-pay/pages/ad-interactive-webview/ad-interactive-webview",
+			"style": {
+				"backgroundColor": "#F8F8F8",
+				"navigationBarTitleText": "ad"
+			}
+		}
+	,{
+    "path": "uni_modules/uni-id-pages/pages/userinfo/realname-verify/realname-verify",
+    "style": {
+        "enablePullDownRefresh": false,
+        "navigationBarTitleText": "实名认证"
+    }
+}
+,{
+    "path": "uni_modules/uni-pay/pages/pay-desk/pay-desk",
+    "style": {
+        "backgroundColor": "#F8F8F8",
+        "navigationBarTitleText": "收银台"
+    }
+}
+],
+	"subPackages": [{
+			"root": "uni_modules/uni-feedback",
+			"pages": [{
+				"path": "pages/opendb-feedback/opendb-feedback",
+				"style": {
+					"navigationBarTitleText": "意见反馈",
+					"enablePullDownRefresh": false
+				}
+			}]
+		},
+		{
+			"root": "uni_modules/uni-id-pages/pages",
+			"pages": [{
+					"path": "userinfo/userinfo",
+					"style": {
+						"navigationBarTitleText": "个人资料"
+					}
+				},
+				{
+					"path": "login/login-withoutpwd"
+				},
+				{
+					"path": "login/login-withpwd"
+				},
+				{
+					"path": "userinfo/deactivate/deactivate",
+					"style": {
+						"navigationBarTitleText": "注销账号"
+					}
+				},
+				{
+					"path": "userinfo/bind-mobile/bind-mobile",
+					"style": {
+						"navigationBarTitleText": "绑定手机号码"
+					}
+				},
+				{
+					"path": "login/login-smscode",
+					"style": {
+						"navigationBarTitleText": "手机验证码登录"
+					}
+				},
+				{
+					"path": "register/register",
+					"style": {
+						"navigationBarTitleText": "注册"
+					}
+				},
+				{
+					"path": "retrieve/retrieve",
+					"style": {
+						"navigationBarTitleText": "重置密码"
+					}
+				}, {
+					"path": "common/webview/webview",
+					"style": {
+						"enablePullDownRefresh": false,
+						"navigationBarTitleText": ""
+					}
+				}, {
+					"path": "userinfo/change_pwd/change_pwd",
+					"style": {
+						"enablePullDownRefresh": false,
+						"navigationBarTitleText": "修改密码"
+					}
+				}, {
+					"path": "register/register-by-email",
+					"style": {
+						"navigationBarTitleText": "邮箱验证码注册"
+					}
+				}, {
+					"path": "retrieve/retrieve-by-email",
+					"style": {
+						"navigationBarTitleText": "通过邮箱重置密码"
+					}
+				},
+				{
+					"path": "userinfo/set-pwd/set-pwd",
+					"style": {
+						"enablePullDownRefresh": false,
+						"navigationBarTitleText": "设置密码"
+					}
+				}
+				// #ifdef H5
+				,
+				{
+					"path": "userinfo/cropImage/cropImage"
+				},
+				{
+					"path": "register/register-admin",
+					"style": {
+						"enablePullDownRefresh": false,
+						"navigationBarTitleText": "注册管理员账号"
+					}
+				}
+				// #endif
+			]
+		},
+		{
+			"root": "pages_sub",
+			"pages": [{
+					"path": "login/login",
+					"style": {
+						"navigationBarTitleText": "登录",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path" : "register/register",
+					"style" : 
+					{
+						"navigationBarTitleText" : "注册",
+						"enablePullDownRefresh" : false
+					}
+				},
+				{
+					"path" : "reset-password/reset-password",
+					"style" : 
+					{
+						"navigationBarTitleText" : "忘记密码",
+						"enablePullDownRefresh" : false
+					}
+				},
+				{
+					"path" : "user-agreement/user-agreement",
+					"style" : 
+					{
+						"navigationBarTitleText" : "用户协议",
+						"enablePullDownRefresh" : false
+					}
+				},
+				{
+					"path" : "privacy-policy/privacy-policy",
+					"style" : 
+					{
+						"navigationBarTitleText" : "隐私政策",
+						"enablePullDownRefresh" : false
+					}
+				},
+				{
+					"path" : "userinfo/userinfo",
+					"style" : 
+					{
+						"navigationBarTitleText" : "个人资料",
+						"enablePullDownRefresh" : false
+					}
+				}
+
+			]
+		},
+		{
+			"root": "pages_template",
+			"pages": [{
+					"path": "db-test/db-test",
+					"style": {
+						"navigationBarTitleText": "数据库API演示"
+					}
+				},
+				{
+					"path": "db-test/list/list",
+					"style": {
+						"navigationBarTitleText": "列表加载演示"
+					}
+				},
+				{
+					"path": "uni-id/index/index",
+					"style": {
+						"navigationBarTitleText": "【开箱即用】vk-uniCloud-router - 云函数路由模式 - uniCloud开发框架 - 已集成uni-id"
+					}
+				},
+				{
+					"path": "uni-id/password/password",
+					"style": {
+						"navigationBarTitleText": "密码"
+					}
+				},
+				{
+					"path": "uni-id/mobile/mobile",
+					"style": {
+						"navigationBarTitleText": "手机号"
+					}
+				},
+				{
+					"path": "uni-id/univerify/univerify",
+					"style": {
+						"navigationBarTitleText": "APP一键登录"
+					}
+				},
+				{
+					"path": "uni-id/weixin/weixin",
+					"style": {
+						"navigationBarTitleText": "微信"
+					}
+				},
+				{
+					"path": "uni-id/weixin/h5-weixin",
+					"style": {
+						"navigationBarTitleText": "微信公众号"
+					}
+				},
+				{
+					"path": "uni-id/weixin/set-user-info",
+					"style": {
+						"navigationBarTitleText": "设置基础信息"
+					}
+				},
+				{
+					"path": "uni-id/alipay/alipay",
+					"style": {
+						"navigationBarTitleText": "支付宝"
+					}
+				},
+				{
+					"path": "uni-id/qq/qq",
+					"style": {
+						"navigationBarTitleText": "QQ"
+					}
+				},
+				{
+					"path": "uni-id/util/util",
+					"style": {
+						"navigationBarTitleText": "其他"
+					}
+				},
+				{
+					"path": "uni-id/email/email",
+					"style": {
+						"navigationBarTitleText": "邮箱"
+					}
+				},
+				{
+					"path": "uni-id/login/index/index",
+					"style": {
+						"navigationBarTitleText": "登录"
+					}
+				},
+				{
+					"path": "uni-id/login/register/register",
+					"style": {
+						"navigationBarTitleText": "注册"
+					}
+				},
+				{
+					"path": "uni-id/login/forget/forget",
+					"style": {
+						"navigationBarTitleText": "找回密码"
+					}
+				},
+				{
+					"path": "vk-vuex/vk-vuex",
+					"style": {
+						"navigationBarTitleText": "vuex演示示例"
+					}
+				},
+				{
+					"path": "openapi/weixin/weixin",
+					"style": {
+						"navigationBarTitleText": "微信开放平台API"
+					}
+				},
+				{
+					"path": "openapi/weixin/msgSecCheck/msgSecCheck",
+					"style": {
+						"navigationBarTitleText": "文本安全检测"
+					}
+				},
+				{
+					"path": "openapi/weixin/imgSecCheck/imgSecCheck",
+					"style": {
+						"navigationBarTitleText": "图片安全检测"
+					}
+				},
+				{
+					"path": "openapi/weixin/sendMessage/sendMessage",
+					"style": {
+						"navigationBarTitleText": "发送订阅消息"
+					}
+				},
+				{
+					"path": "openapi/baidu/baidu",
+					"style": {
+						"navigationBarTitleText": "百度开放平台API"
+					}
+				},
+				{
+					"path": "openapi/qq/qq",
+					"style": {
+						"navigationBarTitleText": "qq开放接口"
+					}
+				},
+				{
+					"path": "openapi/qq/msgSecCheck/msgSecCheck",
+					"style": {}
+				},
+				{
+					"path": "openapi/qq/imgSecCheck/imgSecCheck",
+					"style": {}
+				},
+				{
+					"path": "openapi/douyin/douyin",
+					"style": {
+						"navigationBarTitleText": "抖音开放接口"
+					}
+				},
+				{
+					"path": "openapi/douyin/msgSecCheck/msgSecCheck",
+					"style": {}
+				},
+				{
+					"path": "openapi/douyin/imgSecCheck/imgSecCheck",
+					"style": {}
+				},
+				{
+					"path": "openapi/alipay/alipay",
+					"style": {
+						"navigationBarTitleText": "支付宝开放接口"
+					}
+				},
+				{
+					"path": "uni-id/test/test",
+					"style": {
+						"navigationStyle": "custom", // 隐藏系统导航栏
+						"navigationBarTextStyle": "white" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
+					}
+				}, {
+					"path": "extras/vip/vip",
+					"style": {
+						"navigationBarTitleText": "开通会员",
+						"enablePullDownRefresh": false
+					}
+				}, {
+					"path": "interview/history/history",
+					"style": {
+						"navigationBarTitleText": "面试历史",
+						"enablePullDownRefresh": false
+					}
+				}, {
+					"path": "interview/flow/flow",
+					"style": {
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false
+					}
+				}, {
+					"path": "interview/custom/custom",
+					"style": {
+						"navigationBarTitleText": "自定义模拟面试",
+						"enablePullDownRefresh": false
+					}
+				}, {
+					"path": "interview/feedback/feedback",
+					"style": {
+						"navigationBarTitleText": "面试报告",
+						"enablePullDownRefresh": false
+					}
+				}
+			]
+		}
+	],
+	"globalStyle": {
+		// #ifdef H5
+		"h5": {
+			"titleNView": false
+		},
+		// #endif
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-starter",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#F8F8F8",
+		"enablePullDownRefresh": false,
+		// "maxWidth":375,
+		// #ifdef APP-PLUS || H5
+		"rpxCalcMaxDeviceWidth": 960,
+		"rpxCalcBaseDeviceWidth": 375,
+		"rpxCalcIncludeWidth": 750
+		// #endif
+
+	},
+	"condition": {
+		"list": [{
+				"path": "pages/list/detail"
+			}, {
+				"path": "pages/home/index"
+			},
+			{
+				"path": "pages/ucenter/settings/settings"
+			}
+		],
+		"current": 1
+	},
+	"tabBar": {
+		"color": "#8a8a8a",
+		"selectedColor": "#038885",
+		"backgroundColor": "#fff",
+		"list": [{
+				"pagePath": "pages/home/index",
+				"iconPath": "static/tabbar/home.png",
+				"selectedIconPath": "static/tabbar/home-active.png",
+				"text": "报告"
+			},
+			{
+				"pagePath": "pages/practice/index",
+				"iconPath": "static/tabbar/practice.png",
+				"selectedIconPath": "static/tabbar/practice-active.png",
+				"text": "发现"
+			},
+			{
+				"pagePath": "pages/my/my",
+				"iconPath": "static/tabbar/my.png",
+				"selectedIconPath": "static/tabbar/my-active.png",
+				"text": "我的"
+			},
+			{
+				"pagePath": "pages/ucenter/ucenter",
+				"iconPath": "static/tabbar/my.png",
+				"selectedIconPath": "static/tabbar/my-active.png",
+				"text": "我的"
+			}
+		]
+	},
+	"uniIdRouter": {
+		"loginPage": "uni_modules/uni-id-pages/pages/login/login-withoutpwd",
+		"needLogin": [
+			"/uni_modules/uni-id-pages/pages/userinfo/userinfo"
+		],
+		"resToLogin": true
+	}
+}

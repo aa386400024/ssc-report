@@ -1,0 +1,96 @@
+{
+	"id": "uni-starter",
+	"displayName": "uni-starter",
+	"version": "2.1.3",
+	"description": "省时查报告",
+	"keywords": [
+		"login",
+		"登录",
+		"搜索",
+		"报告",
+		"发现"
+	],
+	"repository": "https://gitcode.net/dcloud/uni-starter",
+	"engines": {
+		"HBuilderX": "^3.2.6"
+	},
+	"dcloudext": {
+		"sale": {
+			"regular": {
+				"price": "0.00"
+			},
+			"sourcecode": {
+				"price": "0.00"
+			}
+		},
+		"contact": {
+			"qq": ""
+		},
+		"declaration": {
+			"ads": "无",
+			"data": "无",
+			"permissions": "无"
+		},
+		"npmurl": "",
+		"type": "unicloud-template-project"
+	},
+	"uni_modules": {
+		"dependencies": [
+			"uni-id-pages"
+		],
+		"encrypt": [],
+		"platforms": {
+			"cloud": {
+				"tcb": "y",
+				"aliyun": "y"
+			},
+			"client": {
+				"App": {
+					"app-vue": "y",
+					"app-nvue": "u"
+				},
+				"H5-mobile": {
+					"Safari": "u",
+					"Android Browser": "u",
+					"微信浏览器(Android)": "u",
+					"QQ浏览器(Android)": "u"
+				},
+				"H5-pc": {
+					"Chrome": "y",
+					"IE": "n",
+					"Edge": "u",
+					"Firefox": "u",
+					"Safari": "u"
+				},
+				"小程序": {
+					"微信": "y",
+					"阿里": "u",
+					"百度": "u",
+					"字节跳动": "u",
+					"QQ": "u",
+					"京东": "u"
+				},
+				"快应用": {
+					"华为": "u",
+					"联盟": "u"
+				},
+				"Vue": {
+					"vue2": "y",
+					"vue3": "y"
+				}
+			}
+		}
+	},
+	"dependencies": {
+		"clipboard": "^2.0.11",
+		"dayjs": "^1.11.9",
+		"lodash": "^4.17.21",
+		"qrcodejs2": "^0.0.2"
+	},
+	"devDependencies": {
+		"@types/lodash": "^4.14.195",
+		"@typescript-eslint/eslint-plugin": "^6.1.0",
+		"@typescript-eslint/parser": "^6.1.0",
+		"uni-read-pages-vite": "^0.0.6"
+	}
+}

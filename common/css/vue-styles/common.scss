@@ -1,0 +1,48 @@
+// 重置样式
+@import '@/uni.scss';
+
+body {
+	background-color: #fff;
+	font-size: 28rpx;
+	color: #333;
+	line-height: 1.6;
+	font-family: "mp-quote", -apple-system-font, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
+}
+
+view,
+scroll-view,
+swiper,
+swiper-item,
+cover-view,
+cover-image,
+icon,
+text,
+rich-text,
+progress,
+button,
+checkbox,
+form,
+input,
+label,
+radio,
+slider,
+switch,
+textarea,
+navigator,
+audio,
+camera,
+image,
+video {
+	box-sizing: border-box;
+}
+
+switch { 
+	transform: translateX(16rpx) scale(0.9); 
+}
+
+.page-container {
+  padding: $uni-spacing-row-base;
+  width: 100%;
+  background-color: $uni-bg-color;
+  height: 100vh;
+}

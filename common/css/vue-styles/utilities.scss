@@ -1,0 +1,532 @@
+/* utilities.scss 实用的样式工具类，如清除浮动、隐藏元素等 */
+
+/* Display */
+.d-none {
+	display: none !important;
+}
+
+.d-block {
+	display: block !important;
+}
+
+.d-inline {
+	display: inline !important;
+}
+
+.d-inline-block {
+	display: inline-block !important;
+}
+
+.d-flex {
+	display: flex !important;
+}
+
+/* Flex */
+.dflex {
+	display: flex;
+	align-items: center;
+}
+.dflex-s {
+	display: flex;
+	align-items: flex-start;
+}
+.dflex-e {
+	display: flex;
+	justify-content: flex-end;
+	align-items: baseline;
+}
+.dflex-es {
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-start;
+}
+.dflex-c {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.dflex-col-c {
+	display: flex;
+	justify-content: center;
+}
+.dflex-a {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+.dflex-b {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.dflex-flow-c {
+	flex-flow: column;
+}
+.dflex-row {
+	flex-flow: row;
+}
+.dflex-col {
+	flex-flow: column;
+}
+.dflex-wrap-w {
+	-ms-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+}
+.row-e {
+	align-items: flex-end;
+}
+.row-s {
+	align-items: flex-start;
+}
+.flex1 {
+	flex: 1;
+}
+
+.dgrid {
+	display: grid;
+}
+.dgrid-col-3 {
+	grid-gap: 20rpx 20rpx;
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.box-sizing-b {
+	box-sizing: border-box;
+}
+.box-sizing-c {
+	box-sizing: content-box;
+}
+
+/* Margins */
+.m-0 {
+	margin: 0 !important;
+}
+
+.mt-0 {
+	margin-top: 0 !important;
+}
+
+.mb-0 {
+	margin-bottom: 0 !important;
+}
+
+.ml-0 {
+	margin-left: 0 !important;
+}
+
+.mr-0 {
+	margin-right: 0 !important;
+}
+
+/* More margins (example with 16upx) */
+.m-1 {
+	margin: 16upx !important;
+}
+
+.mt-1 {
+	margin-top: 16upx !important;
+}
+
+.mb-1 {
+	margin-bottom: 16upx !important;
+}
+
+.ml-1 {
+	margin-left: 16upx !important;
+}
+
+.mr-1 {
+	margin-right: 16upx !important;
+}
+
+/* Paddings (0 and 16upx as example) */
+.p-0,
+.pt-0,
+.pb-0,
+.pl-0,
+.pr-0,
+.p-1,
+.pt-1,
+.pb-1,
+.pl-1,
+.pr-1 {
+	padding: 0 !important;
+}
+
+/* Text alignment */
+.text-left {
+	text-align: left !important;
+}
+
+.text-right {
+	text-align: right !important;
+}
+
+.text-center {
+	text-align: center !important;
+}
+
+.text-justify {
+	text-align: justify !important;
+}
+
+/* Positioning */
+.position-static {
+	position: static !important;
+}
+
+.position-relative {
+	position: relative !important;
+}
+
+.position-absolute {
+	position: absolute !important;
+}
+
+.position-fixed {
+	position: fixed !important;
+}
+
+.position-sticky {
+	position: sticky !important;
+}
+
+/* Overflow */
+.overflow-auto {
+	overflow: auto !important;
+}
+
+.overflow-hidden {
+	overflow: hidden !important;
+}
+
+/* Width and height */
+.w-full {
+	width: 100% !important;
+}
+
+.h-full {
+	height: 100% !important;
+}
+
+.pos-t-full {
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+.pos-b-full {
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.wpre-30 {
+	width: 30%;
+}
+.wpre-50 {
+	width: 50%;
+}
+
+/* Font styles */
+.font-weight-normal {
+	font-weight: normal !important;
+}
+
+.font-weight-bold {
+	font-weight: bold !important;
+}
+
+.font-italic {
+	font-style: italic !important;
+}
+
+.text-decoration-none {
+	text-decoration: none !important;
+}
+
+/* Font sizes (example with 16upx and 32upx) */
+.font-size-1 {
+	font-size: 16upx !important;
+}
+
+.font-size-2 {
+	font-size: 32upx !important;
+}
+
+/* Border radius */
+.rounded {
+	border-radius: 4upx !important;
+}
+
+.rounded-circle {
+	border-radius: 50% !important;
+}
+
+/* Floats */
+.float-left {
+	float: left !important;
+}
+
+.float-right {
+	float: right !important;
+}
+
+.float-none {
+	float: none !important;
+}
+
+/* Vertical alignment */
+.align-baseline {
+	vertical-align: baseline !important;
+}
+
+.align-top {
+	vertical-align: top !important;
+}
+
+.align-middle {
+	vertical-align: middle !important;
+}
+
+/* 背景色 */
+.bg-main {
+	background: #fff;
+}
+.bg-drak {
+	background: #f5f5f5;
+}
+.bg-base {
+	background-color: #ff6a6c;
+	color: #fff;
+}
+.bg-warn {
+	background: #ffbc49;
+	color: #333;
+}
+.bg-disabled {
+	background: #f4f4f4 !important;
+	color: #bbb !important;
+}
+.bg-gray {
+	background: #e8e8e8;
+}
+.ft-main {
+	color: #333;
+}
+.ft-base {
+	color: #ff6a6c;
+}
+.ft-dark {
+	color: #bbb;
+}
+.ft-dark-3 {
+	color: #737373;
+}
+.ft-dark-4 {
+	color: #4c4c4c;
+}
+.ft-black {
+	color: #333;
+}
+.ft-white {
+	color: #fff;
+}
+
+// 定义间距规模
+$spacings: (
+	'xxs': 4rpx,
+	'xs': 6rpx,
+	'sm': 10rpx,
+	'md': 20rpx,
+	'lg': 30rpx,
+	'xl': 40rpx,
+);
+
+// 生成全部方向的 padding 和 margin 类
+@each $name, $size in $spacings {
+	.padding-#{$name} {
+		padding: $size;
+	}
+	.margin-#{$name} {
+		margin: $size;
+	}
+
+	.padding-top-#{$name} {
+		padding-top: $size;
+	}
+	.padding-right-#{$name} {
+		padding-right: $size;
+	}
+	.padding-bottom-#{$name} {
+		padding-bottom: $size;
+	}
+	.padding-left-#{$name} {
+		padding-left: $size;
+	}
+
+	.margin-top-#{$name} {
+		margin-top: $size;
+	}
+	.margin-right-#{$name} {
+		margin-right: $size;
+	}
+	.margin-bottom-#{$name} {
+		margin-bottom: $size;
+	}
+	.margin-left-#{$name} {
+		margin-left: $size;
+	}
+}
+
+// 定义间距规模
+$borderSpacings: (
+	'xxs': 2rpx,
+	'xs': 4rpx,
+	'sm': 6rpx,
+	'md': 8rpx,
+	'lg': 10rpx,
+	'xl': 12rpx,
+);
+
+// 定义颜色规模
+$colors: (
+	'primary': #007bff,
+	'secondary': #6c757d,
+	'success': #28a745,
+	'danger': #dc3545,
+	'warning': #ffc107,
+	'info': #17a2b8,
+	'light': #f8f9fa,
+	'dark': #343a40,
+	'sd-primary': rgba(0, 0, 0, 0.1),
+	'sd-secondary': rgba(0, 0, 0, 0.2),
+	'sd-success': rgba(0, 0, 0, 0.3),
+	'sd-danger': rgba(0, 0, 0, 0.4),
+	'sd-warning': rgba(0, 0, 0, 0.5),
+	'sd-info': rgba(0, 0, 0, 0.6),
+	'sd-light': rgba(0, 0, 0, 0.7),
+	'sd-dark': rgba(0, 0, 0, 0.8),
+);
+
+// 定义border-radius规模
+$radius: (
+	'small': 5rpx,
+	'medium': 10rpx,
+	'large': 20rpx,
+);
+
+// 生成border-radius类
+@each $name, $value in $radius {
+	.border-radius-#{$name} {
+		border-radius: $value;
+	}
+}
+
+// 生成全部方向的 border 类
+@each $name, $size in $borderSpacings {
+	@each $colorName, $colorValue in $colors {
+		.border-#{$name}-#{$colorName} {
+			border-width: $size;
+			border-style: solid;
+			border-color: $colorValue;
+		}
+
+		.border-top-#{$name}-#{$colorName} {
+			border-top-width: $size;
+			border-top-style: solid;
+			border-top-color: $colorValue;
+		}
+		.border-right-#{$name}-#{$colorName} {
+			border-right-width: $size;
+			border-right-style: solid;
+			border-right-color: $colorValue;
+		}
+		.border-bottom-#{$name}-#{$colorName} {
+			border-bottom-width: $size;
+			border-bottom-style: solid;
+			border-bottom-color: $colorValue;
+		}
+		.border-left-#{$name}-#{$colorName} {
+			border-left-width: $size;
+			border-left-style: solid;
+			border-left-color: $colorValue;
+		}
+		.box-shadow-#{$name}-#{$colorName} {
+			box-shadow: 0 4rpx 20rpx 0 $colorValue;
+		}
+	}
+}
+
+$titles: (
+  'h1': (
+    'font-size': 36rpx,
+    'color': #333,
+  ),
+  'h2': (
+    'font-size': 32rpx,
+    'color': #555,
+  ),
+  'h3': (
+    'font-size': 28rpx,
+    'color': #777,
+  ),
+  // ... 可以继续添加其他标题级别
+);
+
+@each $level, $styles in $titles {
+  .title-#{$level} {
+    font-size: map-get($styles, 'font-size');
+    color: map-get($styles, 'color');
+    font-weight: bold; // 假设所有标题都是加粗的
+    // 可以根据需要继续添加其他公共属性
+  }
+};
+
+
+// 定义定位规模
+$positions: (
+  'static',
+  'relative',
+  'absolute',
+  'fixed',
+  'sticky',
+);
+
+$positionValues: (
+  '0': 0,
+  'auto': auto,
+  '50p': 50%, // 注意这里改成了50p
+  '100p': 100%, // 注意这里改成了100p
+  // 你可以根据需要添加其他值
+);
+
+// 生成position类
+@each $position in $positions {
+  .position-#{$position} {
+    position: $position;
+  }
+}
+
+// 生成top、right、bottom、left定位类
+@each $name, $value in $positionValues {
+  .top-#{$name} {
+    top: $value;
+  }
+  
+  .right-#{$name} {
+    right: $value;
+  }
+  
+  .bottom-#{$name} {
+    bottom: $value;
+  }
+  
+  .left-#{$name} {
+    left: $value;
+  }
+}
+
+// 示例：如果你需要一个绝对定位元素，并将其放置在容器的右下角，可以这样使用：
+// class="position-absolute bottom-0 right-0"
