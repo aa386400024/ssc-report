@@ -303,8 +303,71 @@
 						"navigationBarTitleText" : "个人资料",
 						"enablePullDownRefresh" : false
 					}
+				},
+				{
+					"path" : "invite-ranking/invite-ranking",
+					"style" : 
+					{
+						"navigationBarTitleText" : "邀请好友排名",
+						"enablePullDownRefresh" : false
+					}
+				},
+				{
+					"path" : "read-ranking/read-ranking",
+					"style" : 
+					{
+						"navigationBarTitleText" : "阅读排名",
+						"enablePullDownRefresh" : false
+					}
+				},
+				{
+					"path" : "wechat-groups/wechat-groups",
+					"style" : 
+					{
+						"navigationBarTitleText" : "微信群组",
+						"enablePullDownRefresh" : false
+					}
+				},
+				{
+					"path" : "vip-code/vip-code",
+					"style" : 
+					{
+						"navigationBarTitleText" : "VIP兑换码",
+						"enablePullDownRefresh" : false
+					}
+				},
+				{
+					"path" : "favorites/favorites",
+					"style" : 
+					{
+						"navigationBarTitleText" : "我的收藏",
+						"enablePullDownRefresh" : false
+					}
+				},
+				{
+					"path" : "history-view/history-view",
+					"style" : 
+					{
+						"navigationBarTitleText" : "查看历史",
+						"enablePullDownRefresh" : false
+					}
+				},
+				{
+					"path" : "download-history/download-history",
+					"style" : 
+					{
+						"navigationBarTitleText" : "下载历史",
+						"enablePullDownRefresh" : false
+					}
+				},
+				{
+					"path" : "member-details/member-details",
+					"style" : 
+					{
+						"navigationBarTitleText" : "开通会员",
+						"enablePullDownRefresh" : false
+					}
 				}
-
 			]
 		},
 		{
@@ -480,36 +543,6 @@
 					"style": {
 						"navigationStyle": "custom", // 隐藏系统导航栏
 						"navigationBarTextStyle": "white" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
-					}
-				}, {
-					"path": "extras/vip/vip",
-					"style": {
-						"navigationBarTitleText": "开通会员",
-						"enablePullDownRefresh": false
-					}
-				}, {
-					"path": "interview/history/history",
-					"style": {
-						"navigationBarTitleText": "面试历史",
-						"enablePullDownRefresh": false
-					}
-				}, {
-					"path": "interview/flow/flow",
-					"style": {
-						"navigationBarTitleText": "",
-						"enablePullDownRefresh": false
-					}
-				}, {
-					"path": "interview/custom/custom",
-					"style": {
-						"navigationBarTitleText": "自定义模拟面试",
-						"enablePullDownRefresh": false
-					}
-				}, {
-					"path": "interview/feedback/feedback",
-					"style": {
-						"navigationBarTitleText": "面试报告",
-						"enablePullDownRefresh": false
 					}
 				}
 			]

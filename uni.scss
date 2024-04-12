@@ -79,3 +79,23 @@ $uni-color-subtitle: #555555; // 二级标题颜色
 $uni-font-size-subtitle:36rpx;
 $uni-color-paragraph: #3F536E; // 文章段落颜色
 $uni-font-size-paragraph:30rpx;
+
+/* 灰度颜色变量定义 */
+
+// 基础灰，适用于大部分背景
+$uni-grey-base: #f0f0f0; 
+
+// 深灰，适用于重要文字
+$uni-grey-darker: #333333; 
+
+// 中等灰，适用于普通级别文字和边框
+$uni-grey-dark: #666666; 
+
+// 浅灰，适用于辅助文字、占位符或轻微分割线
+$uni-grey-light: #999999; 
+
+// 更浅灰，适用于界面的背景色，能够与基础灰区分开
+$uni-grey-lighter: #e0e0e0; 
+
+// 最浅灰，适用于极少部分需要高亮的背景
+$uni-grey-lightest: #f8f8f8;
