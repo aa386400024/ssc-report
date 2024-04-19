@@ -10,58 +10,18 @@
 				"enablePullDownRefresh": false
 			}
 		}, {
-			"path": "pages/practice/index",
-			"name": "practice",
+			"path": "pages/discover/discover",
+			"name": "discover",
 			"style": {
 				"navigationBarTitleText": "发现",
 				"enablePullDownRefresh": false
 			}
-		},{
+		}, {
 			"path": "pages/my/my",
 			"name": "my",
 			"style": {
 				"navigationBarTitleText": "我",
 				"enablePullDownRefresh": false
-			}
-		},
-		// {
-		// 	"path": "pages/list/list",
-		// 	"style": {
-		// 		// // #ifndef APP-PLUS
-		// 		// "enablePullDownRefresh": true,
-		// 		// // #endif
-		// 		// "navigationStyle": "custom"
-		// 	}
-		// },
-		{
-			"path": "pages/grid/grid",
-			"style": {
-				//#ifndef MP
-				"navigationStyle": "custom"
-				//#endif
-			}
-		}, {
-			"path": "pages/list/search/search",
-			"style": {
-				"navigationBarTitleText": "搜索"
-			}
-		}, {
-			"path": "pages/list/detail",
-			"style": {
-				"app-plus": {
-					"titleNView": {
-						"buttons": [{
-							"type": "share"
-						}],
-						"type": "transparent"
-					}
-				},
-				"h5": {
-					"titleNView": {
-						"type": "transparent"
-					}
-				},
-				"navigationBarTitleText": "文章详情"
 			}
 		},
 		{
@@ -79,57 +39,6 @@
 				}
 			}
 		}, {
-			"path": "pages/ucenter/settings/settings",
-			"style": {
-				"navigationBarTitleText": "设置"
-			}
-		},
-		{
-			"path": "pages/ucenter/read-news-log/read-news-log",
-			"style": {
-				"navigationBarTitleText": "阅读记录",
-				"enablePullDownRefresh": true
-			}
-		}
-		// #ifdef APP-PLUS
-		, {
-			"path": "pages/ucenter/about/about",
-			"style": {
-				"navigationBarTitleText": "关于",
-				"app-plus": {
-					"titleNView": {
-						"buttons": [{
-							"type": "share"
-						}]
-					}
-				}
-			}
-		},
-		{
-			"path": "uni_modules/uni-upgrade-center-app/pages/upgrade-popup",
-			"style": {
-				"disableScroll": true,
-				"app-plus": {
-					"backgroundColorTop": "transparent",
-					"background": "transparent",
-					"titleNView": false,
-					"scrollIndicator": false,
-					"popGesture": "none",
-					"animationType": "fade-in",
-					"animationDuration": 200
-
-				}
-			}
-		},
-		{
-			"path": "pages/ucenter/invite/invite",
-			"style": {
-				"navigationStyle": "custom",
-				"enablePullDownRefresh": false
-			}
-		}
-		// #endif
-		, {
 			"path": "uni_modules/uni-pay/pages/success/success",
 			"style": {
 				"backgroundColor": "#F8F8F8",
@@ -141,22 +50,20 @@
 				"backgroundColor": "#F8F8F8",
 				"navigationBarTitleText": "ad"
 			}
+		}, {
+			"path": "uni_modules/uni-id-pages/pages/userinfo/realname-verify/realname-verify",
+			"style": {
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "实名认证"
+			}
+		}, {
+			"path": "uni_modules/uni-pay/pages/pay-desk/pay-desk",
+			"style": {
+				"backgroundColor": "#F8F8F8",
+				"navigationBarTitleText": "收银台"
+			}
 		}
-	,{
-    "path": "uni_modules/uni-id-pages/pages/userinfo/realname-verify/realname-verify",
-    "style": {
-        "enablePullDownRefresh": false,
-        "navigationBarTitleText": "实名认证"
-    }
-}
-,{
-    "path": "uni_modules/uni-pay/pages/pay-desk/pay-desk",
-    "style": {
-        "backgroundColor": "#F8F8F8",
-        "navigationBarTitleText": "收银台"
-    }
-}
-],
+	],
 	"subPackages": [{
 			"root": "uni_modules/uni-feedback",
 			"pages": [{
@@ -265,107 +172,101 @@
 					}
 				},
 				{
-					"path" : "register/register",
-					"style" : 
-					{
-						"navigationBarTitleText" : "注册",
-						"enablePullDownRefresh" : false
+					"path": "register/register",
+					"style": {
+						"navigationBarTitleText": "注册",
+						"enablePullDownRefresh": false
 					}
 				},
 				{
-					"path" : "reset-password/reset-password",
-					"style" : 
-					{
-						"navigationBarTitleText" : "忘记密码",
-						"enablePullDownRefresh" : false
+					"path": "reset-password/reset-password",
+					"style": {
+						"navigationBarTitleText": "忘记密码",
+						"enablePullDownRefresh": false
 					}
 				},
 				{
-					"path" : "user-agreement/user-agreement",
-					"style" : 
-					{
-						"navigationBarTitleText" : "用户协议",
-						"enablePullDownRefresh" : false
+					"path": "user-agreement/user-agreement",
+					"style": {
+						"navigationBarTitleText": "用户协议",
+						"enablePullDownRefresh": false
 					}
 				},
 				{
-					"path" : "privacy-policy/privacy-policy",
-					"style" : 
-					{
-						"navigationBarTitleText" : "隐私政策",
-						"enablePullDownRefresh" : false
+					"path": "privacy-policy/privacy-policy",
+					"style": {
+						"navigationBarTitleText": "隐私政策",
+						"enablePullDownRefresh": false
 					}
 				},
 				{
-					"path" : "userinfo/userinfo",
-					"style" : 
-					{
-						"navigationBarTitleText" : "个人资料",
-						"enablePullDownRefresh" : false
+					"path": "userinfo/userinfo",
+					"style": {
+						"navigationBarTitleText": "个人资料",
+						"enablePullDownRefresh": false
 					}
 				},
 				{
-					"path" : "invite-ranking/invite-ranking",
-					"style" : 
-					{
-						"navigationBarTitleText" : "邀请好友排名",
-						"enablePullDownRefresh" : false
+					"path": "invite-ranking/invite-ranking",
+					"style": {
+						"navigationBarTitleText": "邀请好友排名",
+						"enablePullDownRefresh": false
 					}
 				},
 				{
-					"path" : "read-ranking/read-ranking",
-					"style" : 
-					{
-						"navigationBarTitleText" : "阅读排名",
-						"enablePullDownRefresh" : false
+					"path": "read-ranking/read-ranking",
+					"style": {
+						"navigationBarTitleText": "阅读排名",
+						"enablePullDownRefresh": false
 					}
 				},
 				{
-					"path" : "wechat-groups/wechat-groups",
-					"style" : 
-					{
-						"navigationBarTitleText" : "微信群组",
-						"enablePullDownRefresh" : false
+					"path": "wechat-groups/wechat-groups",
+					"style": {
+						"navigationBarTitleText": "微信群组",
+						"enablePullDownRefresh": false
 					}
 				},
 				{
-					"path" : "vip-code/vip-code",
-					"style" : 
-					{
-						"navigationBarTitleText" : "VIP兑换码",
-						"enablePullDownRefresh" : false
+					"path": "vip-code/vip-code",
+					"style": {
+						"navigationBarTitleText": "VIP兑换码",
+						"enablePullDownRefresh": false
 					}
 				},
 				{
-					"path" : "favorites/favorites",
-					"style" : 
-					{
-						"navigationBarTitleText" : "我的收藏",
-						"enablePullDownRefresh" : false
+					"path": "favorites/favorites",
+					"style": {
+						"navigationBarTitleText": "我的收藏",
+						"enablePullDownRefresh": false
 					}
 				},
 				{
-					"path" : "history-view/history-view",
-					"style" : 
-					{
-						"navigationBarTitleText" : "查看历史",
-						"enablePullDownRefresh" : false
+					"path": "history-view/history-view",
+					"style": {
+						"navigationBarTitleText": "查看历史",
+						"enablePullDownRefresh": false
 					}
 				},
 				{
-					"path" : "download-history/download-history",
-					"style" : 
-					{
-						"navigationBarTitleText" : "下载历史",
-						"enablePullDownRefresh" : false
+					"path": "download-history/download-history",
+					"style": {
+						"navigationBarTitleText": "下载历史",
+						"enablePullDownRefresh": false
 					}
 				},
 				{
-					"path" : "member-details/member-details",
-					"style" : 
-					{
-						"navigationBarTitleText" : "开通会员",
-						"enablePullDownRefresh" : false
+					"path": "member-details/member-details",
+					"style": {
+						"navigationBarTitleText": "开通会员",
+						"enablePullDownRefresh": false
+					}
+				},
+				{
+					"path": "report-detail/report-detail",
+					"style": {
+						"navigationBarTitleText": "详情",
+						"enablePullDownRefresh": false
 					}
 				}
 			]
@@ -590,7 +491,7 @@
 				"text": "报告"
 			},
 			{
-				"pagePath": "pages/practice/index",
+				"pagePath": "pages/discover/discover",
 				"iconPath": "static/tabbar/practice.png",
 				"selectedIconPath": "static/tabbar/practice-active.png",
 				"text": "发现"

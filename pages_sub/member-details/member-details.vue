@@ -1,5 +1,19 @@
 <template>
 	<view>
+		<!-- #ifdef H5 || APP-PLUS -->
+		<view>请选择支付方式（H5和APP可以选择）</view>
+		<view style="font-size: 24rpx;">H5端会智能识别微信公众号、手机外部浏览器，PC网站扫码支付</view>
+		<radio-group @change="radioChange" style="display: flex;margin: 10rpx 0;">
+			<label style="flex: 1;"> <radio value="wxpay" :checked="form1.provider == 'wxpay'" /> <text>微信</text> </label>
+			<label style="flex: 1;"> <radio value="alipay" :checked="form1.provider == 'alipay'" /> <text>支付宝</text> </label>
+		</radio-group>
+		<!-- #endif -->
+		
+		<view style="margin-bottom: 16rpx;">支付金额：(单位分 100 = 1元)</view>
+		<input class="input" type="text" v-model.number="form1.total_fee" placeholder="支付金额" />
+		<view style="margin-bottom: 16rpx;">订单号</view>
+		<input class="input" type="text" v-model="form1.out_trade_no" placeholder="订单号" />
+		
 		<!-- #ifndef H5 -->
 		<button class="button" @click="createPayment">支付</button>
 		<!-- #endif -->
@@ -56,20 +70,31 @@ const myData = reactive({
 		payOrderInfo: false,
 		// 是否自动获取小程序的openid（若传false，则在createPayment时需要自己传对应的openid，一般服务商模式下需要传false）
 		autoGetOpenid: true
+	},
+	form1: {
+		provider: "wxpay", // 支付供应商 wxpay 微信支付 alipay 支付宝支付
+		total_fee: 1, // 支付金额（单位分，100=1元）
+		out_trade_no: "", // 订单号
+		subject: "测试订单标题", // 订单标题
+		body: "测试订单详情", // 订单详情
+		type: "recharge", // 支付回调类型
+		openid: ""
 	}
 });
 
-const { vkPay } = toRefs(myData);
+const { vkPay, form1 } = toRefs(myData);
+
+const radioChange = (e) => {
+	form1.value.provider = e.detail.value;
+}
 
 const createPayment = (obj = {}) => {
-  vkPay.value.out_trade_no = obj.out_trade_no || "test_" + Date.now();
-
-  // 根据编译平台选择支付提供商
+  form1.value.out_trade_no = obj.out_trade_no || "test_" + Date.now();
   // #ifdef MP-WEIXIN
-  vkPay.value.provider = "wxpay";
+  form1.value.provider = "wxpay";
   // #endif
   // #ifdef MP-ALIPAY
-  vkPay.value.provider = "alipay";
+  form1.value.provider = "alipay";
   // #endif
 
   // 支付流程调用

@@ -5,7 +5,7 @@
     "configurations" : [
         {
             "app-plus" : {
-                "launchtype" : "local"
+                "launchtype" : "remote"
             },
             "default" : {
                 "launchtype" : "local"
@@ -25,6 +25,7 @@
         },
         {
             "openVueDevtools" : true,
+            "playground" : "standard",
             "type" : "uni-app:app-android"
         }
     ]

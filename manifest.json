@@ -2,7 +2,7 @@
     "name" : "ssc-report",
     "appid" : "__UNI__FDA04E6",
     "description" : "云端一体应用快速开发基本项目模版",
-    "versionName" : "",
+    "versionName" : "v1.0",
     "versionCode" : "100",
     "transformPx" : false,
     "networkTimeout" : {
@@ -39,10 +39,29 @@
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
                 ]
             },
-            "ios" : {},
+            "ios" : {
+                "dSYMs" : false
+            },
             "sdkConfigs" : {
                 "push" : {
                     "unipush" : null
+                },
+                "ad" : {}
+            }
+        },
+        "nativePlugins" : {
+            "syczuan-pdfview" : {
+                "__plugin_info__" : {
+                    "name" : "Android iOS PDF阅读器",
+                    "description" : "Android iOS pdf阅读器，无其他额外UI，自定义程度高，可根据参数配置实现付费阅读等功能，支持本地pdf，网络pdf自动下载、自定义保存位置等功能",
+                    "platforms" : "Android,iOS",
+                    "url" : "https://ext.dcloud.net.cn/plugin?id=13955",
+                    "android_package_name" : "com.domainname.sscreport",
+                    "ios_bundle_id" : "com.domainname.sscreport",
+                    "isCloud" : true,
+                    "bought" : 1,
+                    "pid" : "13955",
+                    "parameters" : {}
                 }
             }
         }

@@ -9,9 +9,9 @@ module.exports = {
    */
   "notifyUrl": {
     // 本地开发环境，如果你本地开发和线上环境共用同一个服务空间则只需要填线上环境的即可
-    "a4f90532-ac60-4a43-81c1-a5c4s3fbs66": "https://a4f90532-ac60-4a43-81c1-a5c4s3fbs66.bspapp.com/http/vk-pay",
+    "mp-ab8b269c-c52c-4795-a674-3973206ce16b": "https://mp-ab8b269c-c52c-4795-a674-3973206ce16b.bspapp.com/http/vk-pay",
     // 线上正式环境
-    "b5a9s861-ba20-dca5-56a2-bd3fbsasxz6": "https://b5a9s861-ba20-dca5-56a2-bd3fbsasxz6.bspapp.com/http/vk-pay"
+    "mp-ab8b269c-c52c-4795-a674-3973206ce16b": "https://mp-ab8b269c-c52c-4795-a674-3973206ce16b.bspapp.com/http/vk-pay"
   },
   /**
    * 微信
@@ -27,24 +27,24 @@ module.exports = {
     "mp-weixin": {
       "appId": "",
       "secret": "",
-      "mchId": "1620035811",
+      "mchId": "1566686551",
       "key": "",
       "pfx": fs.readFileSync(__dirname + '/wxpay/wxpay.p12')
     },
     // 微信 - APP支付（微信支付申请APP支付）
     "app-plus": {
-      "appId": "",
-      "secret": "",
-      "mchId": "1620035811",
-      "key": "",
+      "appId": "wx2d460e8d20f20db8",
+      "secret": "b5f16f8a8aef15e494e2c1e72c8e6e73",
+      "mchId": "1566686551",
+      "key": "EC733D71493D14F53E90C187D8CB7D27",
       "pfx": fs.readFileSync(__dirname + '/wxpay/wxpay.p12')
     },
     // 微信 - H5电脑网站二维码支付（微信支付申请Native支付）
     "h5": {
-      "appId": "",
-      "secret": "",
-      "mchId": "",
-      "key": "",
+      "appId": "wx2d460e8d20f20db8",
+      "secret": "b5f16f8a8aef15e494e2c1e72c8e6e73",
+      "mchId": "1566686551",
+      "key": "EC733D71493D14F53E90C187D8CB7D27",
       "pfx": fs.readFileSync(__dirname + '/wxpay/wxpay.p12')
     },
     // 微信 - 公众号支付（微信支付申请JSAPI支付）
@@ -57,10 +57,10 @@ module.exports = {
     },
     // 微信 - 手机外部浏览器H5支付（微信支付申请H5支付）
     "mweb": {
-      "appId": "",
-      "secret": "",
-      "mchId": "",
-      "key": "",
+      "appId": "wx2d460e8d20f20db8",
+      "secret": "b5f16f8a8aef15e494e2c1e72c8e6e73",
+      "mchId": "1566686551",
+      "key": "EC733D71493D14F53E90C187D8CB7D27",
       "pfx": fs.readFileSync(__dirname + '/wxpay/wxpay.p12'),
       // 场景信息，必填
       "sceneInfo": {
