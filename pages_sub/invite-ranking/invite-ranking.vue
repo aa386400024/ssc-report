@@ -56,9 +56,9 @@ const isNumber = computed(() => !isNaN(parseFloat(myData.ranking)) && isFinite(m
 		width: 100%;
 
 		.status-item {
-			display: flex; // 设置为flex布局
-			flex-direction: column; // 子元素垂直排列
-			align-items: center; // 子元素水平居中
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 			text-align: center;
 
 			.number {
@@ -66,13 +66,13 @@ const isNumber = computed(() => !isNaN(parseFloat(myData.ranking)) && isFinite(m
 				font-size: 80rpx;
 				color: $uni-color-theme;
 				min-height: 130rpx; // 设置一个最小高度，使得所有.number元素高度相等
-				display: flex; // 使用flex布局
-				align-items: center; // 垂直居中
-				justify-content: center; // 水平居中
+				display: flex;
+				align-items: center;
+				justify-content: center;
 			}
 			
 			.not-number {
-			    font-size: 40rpx; // 或者你想要的字体大小
+			    font-size: 40rpx;
 			}
 
 			.label {

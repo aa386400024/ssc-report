@@ -72,7 +72,7 @@
 import { onMounted, reactive, ref, toRefs } from 'vue';
 import { useInterviewStore } from '@/stores';
 import { useGlobalAPI } from '@/hooks/useGlobalAPI';
-import { fetchIndustries, fetchPositions } from '@/api/home';
+import { fetchReportsView } from '@/api/home';
 import PermissionDrawer from './permission-drawer/permission-drawer.vue';
 
 const { apiWrapper } = useGlobalAPI();
@@ -92,8 +92,6 @@ const myData = reactive({
 		{ name: '短视频' },
 		{ name: '房地产' },
 	],
-	defaultIndustryId: '',
-	currentIndustryName: '',
 	activeStyle: {
 		color: '#303133',
 		fontWeight: 'bold',
@@ -108,7 +106,6 @@ const myData = reactive({
 		paddingRight: '15px',
 		height: '36px'
 	},
-	positions: [],
 	showPopup: false,
 	popupCustomStyle: {
 		backgroundColor: '#fff'
@@ -140,12 +137,9 @@ const {
 	customStyle,
 	textColor,
 	reportCategoryList,
-	defaultIndustryId,
-	currentIndustryName,
 	activeStyle,
 	inactiveStyle,
 	itemStyle,
-	positions,
 	showPopup,
 	popupCustomStyle,
 	bannerList,
@@ -192,44 +186,17 @@ const handleCell = (name) => {
 	}
 };
 
-// 切换行业tab点击事件
-const handleTabClick = (item: any) => {
-	currentIndustryName.value = item.name;
-	const data = {
-		industry_id: item.industry_id
-	};
-	fetchPositionApi(data);
-};
-
-// 获取报告分类数据
-const fetchReportCategoryApi = async () => {
-	try {
-		const res = await fetchIndustries();
-		// reportCategoryList.value = res.rows || [];
-		defaultIndustryId.value = res.rows[0].industry_id;
-		currentIndustryName.value = res.rows[0].name;
-	} catch (error) {
-		console.error('Error during fetchTodosCloud:', error);
-		// 可以在这里添加更多的错误处理逻辑，比如设置一个标志，让用户知道出现了错误
-	}
-};
-
-// 获取职位数据
-const fetchPositionApi = async (data: any) => {
-	try {
-		const res = await fetchPositions(data);
-		positions.value = res.rows || [];
-	} catch (error) {
-		console.error('Error during fetchTodosCloud:', error);
-		// 可以在这里添加更多的错误处理逻辑，比如设置一个标志，让用户知道出现了错误
-	}
-};
-
-// 职位点击事件-跳转到面试页
-const goToInterview = (job: any) => {
-	interviewStore.currentJobInfo = job;
-	interviewStore.currentJobInfo.industry_name = currentIndustryName.value;
-	showPopup.value = true;
+const reportsView = async () => {
+    try {
+        const data = { pageSize: 10, pageNo: 1 };
+		const headers = {"Authorization": "U616954605653f450b2fb6947e998c68c8879432132bd" };
+        const result = await fetchReportsView(data, headers);
+		console.log(result, '报告列表报告列表报告列表报告列表')
+    } catch (e) {
+        console.error('Failed to fetch todos:', e);
+    } finally {
+		
+    }
 };
 
 // 关闭弹出层
@@ -256,13 +223,7 @@ onMounted(async () => {
 	// #ifdef MP-WEIXIN
 	doRequire();
 	// #endif
-
-	fetchReportCategoryApi().then(() => {
-		const data = {
-			industry_id: defaultIndustryId.value
-		};
-		fetchPositionApi(data);
-	});
+	reportsView()
 });
 </script>
 
