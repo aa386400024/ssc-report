@@ -242,13 +242,6 @@
 					}
 				},
 				{
-					"path": "history-view/history-view",
-					"style": {
-						"navigationBarTitleText": "查看历史",
-						"enablePullDownRefresh": false
-					}
-				},
-				{
 					"path": "download-history/download-history",
 					"style": {
 						"navigationBarTitleText": "下载历史",
@@ -267,6 +260,14 @@
 					"style": {
 						"navigationBarTitleText": "详情",
 						"enablePullDownRefresh": false
+					}
+				},
+				{
+					"path" : "search/search",
+					"style" : 
+					{
+						"navigationBarTitleText" : "报告搜索",
+						"enablePullDownRefresh" : false
 					}
 				}
 			]

@@ -1,24 +1,22 @@
 <template>
-	<view class="page-container">
-		<u-search placeholder="输入报告关键词, 例如'人工智能'" shape="round" :disabled="true" :showAction="false" :color="textColor" @click="handleSearch"></u-search>
+	<!-- #ifdef MP-WEIXIN -->
+	<ws-wx-privacy id="privacy-popup"></ws-wx-privacy>
+	<!-- #endif -->
+	<z-paging ref="paging" v-model="reportList" @query="queryReports" refresher-enabled>
+		<template #top>
+			<view class="page-container">
+				<u-search placeholder="输入报告关键词, 例如'人工智能'" shape="round" :disabled="true" :showAction="false" :color="textColor" @click="handleSearch"></u-search>
 
-		<view class="swiper">
-			<u-swiper indicator indicatorMode="dot" :height="100" :radius="8" :list="bannerList" @change="changeBanner" @click="clickBanner"></u-swiper>
-		</view>
+				<view class="swiper">
+					<u-swiper indicator indicatorMode="dot" :height="100" :radius="8" :list="bannerList" @change="changeBanner" @click="clickBanner"></u-swiper>
+				</view>
 
-		<view class="tabs">
-			<u-tabs :list="reportCategoryList" :activeStyle="activeStyle" :inactiveStyle="inactiveStyle" :itemStyle="itemStyle" @click="handleTabClick"></u-tabs>
-		</view>
-
-		<scroll-view
-			class="report-view"
-			style="height: 70vh;"
-			:scroll-y="true"
-			@scrolltolower="loadMore"
-			:lower-threshold="50"
-			:refresher-enabled="true"
-			@refresherrefresh="onRefresh"
-		>
+				<view class="tabs">
+					<u-tabs :list="reportCategoryList" :activeStyle="activeStyle" :inactiveStyle="inactiveStyle" :itemStyle="itemStyle" @click="handleTabClick"></u-tabs>
+				</view>
+			</view>
+		</template>
+		<view class="report-view">
 			<u-cell-group :border="false" :customStyle="{ fontWeight: 'bold' }" class="cell-group-container">
 				<u-cell v-for="(cell, index) in reportList" :key="`group-0-cell-${index}`" @click="() => handleCell(cell.name)">
 					<template #title>
@@ -42,12 +40,9 @@
 					</template>
 				</u-cell>
 			</u-cell-group>
-			<view class="load-more">
-				<text v-if="isLoading">{{ loadingText }}</text>
-				<text v-else-if="!hasMore && reportList.length">没有更多内容了</text>
-			</view>
-		</scroll-view>
-	</view>
+		</view>
+	</z-paging>
+	<u-popup mode="bottom" round="20" :show="showPopup" :customStyle="popupCustomStyle" @close="closePopup" @open="openPopup"></u-popup>
 </template>
 
 <script lang="ts" setup>
@@ -71,6 +66,10 @@ const myData = reactive({
 		paddingRight: '15px',
 		height: '36px'
 	},
+	showPopup: false,
+	popupCustomStyle: {
+		backgroundColor: '#fff'
+	},
 	bannerList: [
 		'https://cdn.uviewui.com/uview/swiper/swiper1.png',
 		'https://cdn.uviewui.com/uview/swiper/swiper2.png',
@@ -80,24 +79,34 @@ const myData = reactive({
 		{ name: 'inviteRanking', icon: 'friends', title: '2023胖东来：幸福企业进化之路分享-混沌学院.pdf', path: '/pages_sub/invite-ranking/invite-ranking' },
 		{ name: 'readRanking', icon: 'read', title: '2024年ai营销应用解析报告-微易播.pdf', path: '/pages_sub/read-ranking/read-ranking' },
 		{ name: 'wechatGroups', icon: 'wechat', title: '2024年年度天猫消费趋势报告-天猫.pdf', path: '/pages_sub/wechat-groups/wechat-groups' },
-		{ name: 'vipCode', icon: 'vip', title: '2024全球人才趋势报告：在机器增强的世界释放员工潜力-美世咨询.pdf', path: '/pages_sub/vip-code/vip-code' },
-		{ name: 'inviteRanking', icon: 'friends', title: '2023胖东来：幸福企业进化之路分享-混沌学院.pdf', path: '/pages_sub/invite-ranking/invite-ranking' },
-		{ name: 'readRanking', icon: 'read', title: '2024年ai营销应用解析报告-微易播.pdf', path: '/pages_sub/read-ranking/read-ranking' },
-		{ name: 'wechatGroups', icon: 'wechat', title: '2024年年度天猫消费趋势报告-天猫.pdf', path: '/pages_sub/wechat-groups/wechat-groups' },
 		{ name: 'vipCode', icon: 'vip', title: '2024全球人才趋势报告：在机器增强的世界释放员工潜力-美世咨询.pdf', path: '/pages_sub/vip-code/vip-code' }
 	],
-	pageNo: 1,
-	pageSize: 10,
-	isLoading: false,
-	loadingText: '加载中...',
-	hasMore: true
+	paging: null
 });
-const { textColor, reportCategoryList, activeStyle, inactiveStyle, itemStyle, bannerList, reportList, isLoading, loadingText, hasMore } = toRefs(myData);
+const { textColor, reportCategoryList, activeStyle, inactiveStyle, itemStyle, showPopup, popupCustomStyle, bannerList, reportList, paging } = toRefs(myData);
+const childRef = ref<ChildComponentRef | null>(null);
 
 const handleSearch = () => {
 	console.log('handleSearch');
 	uni.navigateTo({
 		url: `/pages_sub/search/search`
+	});
+};
+
+// 查看用户是否授权隐私协议
+const doRequire = () => {
+	uni.requirePrivacyAuthorize({
+		success: () => {
+			console.log('同意');
+			// 用户同意授权
+			// 继续小程序逻辑
+		},
+		fail: () => {
+			console.log('拒绝');
+		}, // 用户拒绝授权
+		complete: (complete) => {
+			console.log(complete, 'complete');
+		}
 	});
 };
 
@@ -121,53 +130,62 @@ const handleCell = (name) => {
 
 const handleTabClick = () => {};
 
-const loadMore = async () => {
-    console.log('Attempting to load more...');
-    if (!myData.hasMore || myData.isLoading) {
-        return; // 如果没有更多数据或正在加载，则直接返回
-    }
-    myData.isLoading = true; // 开始加载数据
-    myData.loadingText = '加载中...'; // 设置加载文本
-    myData.pageNo++; // 增加页码
+const queryReports = async (pageNo: number, pageSize: number) => {
     try {
-        const data = { pageSize: myData.pageSize, pageNo: myData.pageNo };
-        const headers = { Authorization: '你的认证token' };
-        let result = await fetchReportsView(data, headers);
-        if (result && result.record && result.record.reports && result.record.reports.length) {
-            myData.reportList.push(...result.record.reports);
-            myData.hasMore = result.record.hasNext; // 根据后端返回更新是否还有更多数据
+        const data = { pageSize, pageNo };
+        const headers = { Authorization: 'U616954605653f450b2fb6947e998c68c8879432132bd' };
+        const result = await fetchReportsView(data, headers);
+        console.log(result, '报告列表');
+
+        // 检查 result.data 是否存在，并且 result.data.list 是否存在
+        if (result && result.data && result.data.list) {
+            // 在调用 paging.value.complete 之前确保 paging.value 不为 null
+            if (paging.value) {
+                paging.value.complete(result.data.list);
+            } else {
+                console.error('Paging component is not initialized');
+            }
         } else {
-            myData.hasMore = false; // 如果返回的数据为空，则标记为没有更多数据
-            myData.loadingText = '没有更多内容了'; // 设置提示文本
+            console.error('No data received:', result);
+            if (paging.value) {
+                paging.value.complete(false);
+            }
         }
     } catch (e) {
         console.error('Failed to fetch reports:', e);
-        myData.hasMore = false; // 请求失败也应该标记为没有更多数据
-        myData.loadingText = '加载失败，请重试'; // 设置失败提示文本
+        if (paging.value) {
+            paging.value.complete(false);
+        }
     }
-    myData.isLoading = false; // 完成加载
 };
 
-const onRefresh = async () => {
-    console.log('Refreshing data...');
-    if (myData.isLoading) {
-        return; // 如果正在加载，则直接返回
-    }
-    myData.isLoading = true; // 开始刷新数据
-    myData.loadingText = '刷新中...'; // 设置刷新文本
-    myData.pageNo = 1; // 重置为第一页
-    myData.hasMore = true; // 假设还有更多数据可加载
-    await loadMore(); // 调用加载更多的方法，但这次是为了刷新数据
-    myData.isLoading = false; // 完成刷新
-    uni.stopPullDownRefresh(); // 停止下拉刷新动画
+
+// 关闭弹出层
+const closePopup = () => {
+	showPopup.value = false;
 };
 
-onMounted(() => {
-    loadMore();
+// 子组件关闭抽屉自定义事件
+const childClosePopup = () => {
+	showPopup.value = false;
+};
+
+// 开启抽屉弹出层
+const openPopup = () => {
+	childRef.value?.netWorkStatus();
+};
+
+onMounted(async () => {
+	// #ifdef MP-WEIXIN
+	doRequire();
+	// #endif
 });
 </script>
 
 <style lang="scss" scoped>
+::v-deep .u-sticky {
+	z-index: 1 !important;
+}
 .page-container {
 	background: #fff;
 	.swiper {
@@ -214,10 +232,6 @@ onMounted(() => {
 				}
 			}
 		}
-	}
-	.load-more {
-		display: flex;
-		justify-content: center;
 	}
 }
 </style>

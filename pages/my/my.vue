@@ -53,7 +53,7 @@ const myData = reactive({
 		{
 			cells: [
 				{ name: 'favorites', icon: 'favorite', title: '我的收藏', path: '/pages_sub/favorites/favorites' },
-				{ name: 'historyView', icon: 'history', title: '查看历史', path: '/pages_sub/history-view/history-view' },
+				{ name: 'historyView', icon: 'history', title: '查看历史', path: '/pages_sub/view-history/view-history' },
 				{ name: 'downloadHistory', icon: 'download', title: '下载历史', path: '/pages_sub/download-history/download-history' }
 			]
 		}
