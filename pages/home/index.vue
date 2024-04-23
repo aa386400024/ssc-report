@@ -64,7 +64,7 @@
 		</view>
 	</view>
 	<u-popup mode="bottom" round="20" :show="showPopup" :customStyle="popupCustomStyle" @close="closePopup" @open="openPopup">
-		<PermissionDrawer ref="childRef" @childClosePopup="childClosePopup" @childStartMockInterview="childStartMockInterview" />
+		
 	</u-popup>
 </template>
 
@@ -178,13 +178,17 @@ const handleCell = (name) => {
 	const cellItem = myData.cellGroups.flatMap((group) => group.cells).find((cell) => cell.name === name);
 	console.log(cellItem, "cellItem.path")
 	if (cellItem && cellItem.path) {
-		uni.navigateTo({
-			url: `/pages_sub/report-detail/report-detail?id=${cellItem}` // 将参数拼接在URL中
+		vk.navigateTo({
+			url: `/pages_sub/report-detail/report-detail?id=${cellItem.path}` // 将参数拼接在URL中
 		});
 	} else {
 		console.error('未找到对应的路由配置');
 	}
 };
+
+const handleTabClick = () => {
+	
+}
 
 const reportsView = async () => {
     try {
@@ -207,11 +211,6 @@ const closePopup = () => {
 // 子组件关闭抽屉自定义事件
 const childClosePopup = () => {
 	showPopup.value = false;
-};
-
-// 子组件开始模拟面试自定义事件
-const childStartMockInterview = () => {
-	vk.navigateTo('/pages_template/interview/custom/custom');
 };
 
 // 开启抽屉弹出层
