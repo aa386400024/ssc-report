@@ -2,8 +2,8 @@
     "name" : "ssc-report",
     "appid" : "__UNI__FDA04E6",
     "description" : "云端一体应用快速开发基本项目模版",
-    "versionName" : "v1.0",
-    "versionCode" : "100",
+    "versionName" : "v1.1",
+    "versionCode" : 101,
     "transformPx" : false,
     "networkTimeout" : {
         "uploadFile" : 600000
@@ -18,7 +18,9 @@
             "autoclose" : true,
             "delay" : 0
         },
-        "modules" : {},
+        "modules" : {
+            "OAuth" : {}
+        },
         "distribute" : {
             "android" : {
                 "permissions" : [
@@ -37,16 +39,33 @@
                     "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
                     "<uses-feature android:name=\"android.hardware.camera\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
-                ]
+                ],
+                "minSdkVersion" : 21
             },
             "ios" : {
-                "dSYMs" : false
+                "dSYMs" : false,
+                "capabilities" : {
+                    "entitlements" : {
+                        "com.apple.developer.associated-domains" : [
+                            "applinks:static-mp-ab8b269c-c52c-4795-a674-3973206ce16b.next.bspapp.com"
+                        ]
+                    }
+                }
             },
             "sdkConfigs" : {
                 "push" : {
                     "unipush" : null
                 },
-                "ad" : {}
+                "ad" : {},
+                "oauth" : {
+                    "univerify" : {},
+                    "apple" : {},
+                    "weixin" : {
+                        "appid" : "wx2d460e8d20f20db8",
+                        "appsecret" : "b5f16f8a8aef15e494e2c1e72c8e6e73",
+                        "UniversalLinks" : "https://static-mp-ab8b269c-c52c-4795-a674-3973206ce16b.next.bspapp.com/uni-universallinks/__UNI__FDA04E6/"
+                    }
+                }
             }
         },
         "nativePlugins" : {
@@ -94,5 +113,6 @@
     },
     "vueVersion" : "3",
     "locale" : "zh-Hans",
-    "fallbackLocale" : "zh-Hans"
+    "fallbackLocale" : "zh-Hans",
+    "_spaceID" : "mp-ab8b269c-c52c-4795-a674-3973206ce16b"
 }
