@@ -106,9 +106,9 @@ const changeBanner = () => {};
 const clickBanner = () => {};
 
 const handleCell = (name) => {
-	// 查找对应的cell项
+	// 直接从reportList中查找对应的cell项
 	console.log(name, 'name');
-	const cellItem = myData.cellGroups.flatMap((group) => group.cells).find((cell) => cell.name === name);
+	const cellItem = myData.reportList.find((cell) => cell.name === name);
 	console.log(cellItem, 'cellItem.path');
 	if (cellItem && cellItem.path) {
 		uni.navigateTo({
