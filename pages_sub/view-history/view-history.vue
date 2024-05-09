@@ -1,5 +1,13 @@
 <template>
 	<view class="page-container">
+		<InfiniteScroll
+			class="cell-group-container"
+			:loadMoreMethod="loadMore"
+			:hasMore="hasMore"
+			:isLoading="isLoading"
+			:enableRefresh="false"
+			@update:isLoading="updateIsLoading"
+		>
 		<u-cell-group :border="false" :customStyle="{ fontWeight: 'bold' }" class="cell-group-container">
 			<u-cell v-for="(cell, index) in cellGroups" :key="`group-0-cell-${index}`" @click="() => handleCell(cell.name)">
 				<template #title>
@@ -19,11 +27,14 @@
 				</template>
 			</u-cell>
 		</u-cell-group>
+		</InfiniteScroll>
 	</view>
 </template>
 
 <script setup lang="ts">
-import { reactive, toRefs, computed } from 'vue';
+import { reactive, toRefs, computed, onMounted } from 'vue';
+import { fetchViewHistory } from '@/api/my';
+import InfiniteScroll from '@/components/InfiniteScroll/InfiniteScroll.vue';
 
 const myData = reactive({
 	cellGroups: [
@@ -31,10 +42,14 @@ const myData = reactive({
 		{ name: 'readRanking', icon: 'read', title: '2024年ai营销应用解析报告-微易播.pdf', path: '/pages_sub/read-ranking/read-ranking' },
 		{ name: 'wechatGroups', icon: 'wechat', title: '2024年年度天猫消费趋势报告-天猫.pdf', path: '/pages_sub/wechat-groups/wechat-groups' },
 		{ name: 'vipCode', icon: 'vip', title: '2024全球人才趋势报告：在机器增强的世界释放员工潜力-美世咨询.pdf', path: '/pages_sub/vip-code/vip-code' }
-	]
+	],
+	pageNo: 1,
+	pageSize: 10,
+	hasMore: true,
+	isLoading: false
 });
 
-const { cellGroups } = toRefs(myData);
+const { cellGroups, hasMore, isLoading } = toRefs(myData);
 
 const handleCell = (name: string) => {
 	// 查找对应的cell项
@@ -50,9 +65,30 @@ const handleCell = (name: string) => {
 	}
 };
 
-const handleJoinRequest = () => {
-	
-}
+const loadMore = async () => {
+	if (!hasMore.value || isLoading.value) return;
+	isLoading.value = true;
+	try {
+		const { data, more } = await fetchViewHistory(myData.pageNo, myData.pageSize);
+		if (data.length) {
+			cellGroups.value = [...cellGroups.value, ...data];
+			myData.pageNo++;
+			hasMore.value = more;
+		} else {
+			hasMore.value = false;
+		}
+	} catch (error) {
+		console.error('Error fetching data:', error);
+	} finally {
+		isLoading.value = false;
+	}
+};
+
+const updateIsLoading = (newLoading) => {
+	isLoading.value = newLoading;
+};
+
+onMounted(loadMore);
 </script>
 
 <style lang="scss" scoped>

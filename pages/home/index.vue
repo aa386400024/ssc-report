@@ -10,14 +10,13 @@
 			<u-tabs :list="reportCategoryList" :activeStyle="activeStyle" :inactiveStyle="inactiveStyle" :itemStyle="itemStyle" @click="handleTabClick"></u-tabs>
 		</view>
 
-		<scroll-view
+		<InfiniteScroll
 			class="report-view"
-			style="height: 70vh;"
-			:scroll-y="true"
-			@scrolltolower="loadMore"
-			:lower-threshold="50"
-			:refresher-enabled="true"
-			@refresherrefresh="onRefresh"
+			:loadMoreMethod="loadMore"
+			:hasMore="hasMore"
+			:isLoading="isLoading"
+			:enableRefresh="false"
+			@update:isLoading="(isLoading) => (myData.isLoading = isLoading)"
 		>
 			<u-cell-group :border="false" :customStyle="{ fontWeight: 'bold' }" class="cell-group-container">
 				<u-cell v-for="(cell, index) in reportList" :key="`group-0-cell-${index}`" @click="() => handleCell(cell.name)">
@@ -42,17 +41,14 @@
 					</template>
 				</u-cell>
 			</u-cell-group>
-			<view class="load-more">
-				<text v-if="isLoading">{{ loadingText }}</text>
-				<text v-else-if="!hasMore && reportList.length">没有更多内容了</text>
-			</view>
-		</scroll-view>
+		</InfiniteScroll>
 	</view>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref, toRefs } from 'vue';
-import { fetchReportsView } from '@/api/home';
+import { fetchReportsView, fetchBannerInfo, fetchIndustries, fetchHotReport } from '@/api/home';
+import InfiniteScroll from '@/components/InfiniteScroll/InfiniteScroll.vue';
 
 const myData = reactive({
 	textColor: '#fff',
@@ -88,9 +84,8 @@ const myData = reactive({
 	],
 	pageNo: 1,
 	pageSize: 10,
-	isLoading: false,
-	loadingText: '加载中...',
-	hasMore: true
+	hasMore: true,
+	isLoading: false
 });
 const { textColor, reportCategoryList, activeStyle, inactiveStyle, itemStyle, bannerList, reportList, isLoading, loadingText, hasMore } = toRefs(myData);
 
@@ -122,48 +117,69 @@ const handleCell = (name) => {
 const handleTabClick = () => {};
 
 const loadMore = async () => {
-    console.log('Attempting to load more...');
-    if (!myData.hasMore || myData.isLoading) {
-        return; // 如果没有更多数据或正在加载，则直接返回
-    }
-    myData.isLoading = true; // 开始加载数据
-    myData.loadingText = '加载中...'; // 设置加载文本
-    myData.pageNo++; // 增加页码
-    try {
-        const data = { pageSize: myData.pageSize, pageNo: myData.pageNo };
-        const headers = { Authorization: '你的认证token' };
-        let result = await fetchReportsView(data, headers);
-        if (result && result.record && result.record.reports && result.record.reports.length) {
-            myData.reportList.push(...result.record.reports);
-            myData.hasMore = result.record.hasNext; // 根据后端返回更新是否还有更多数据
-        } else {
-            myData.hasMore = false; // 如果返回的数据为空，则标记为没有更多数据
-            myData.loadingText = '没有更多内容了'; // 设置提示文本
-        }
-    } catch (e) {
-        console.error('Failed to fetch reports:', e);
-        myData.hasMore = false; // 请求失败也应该标记为没有更多数据
-        myData.loadingText = '加载失败，请重试'; // 设置失败提示文本
-    }
-    myData.isLoading = false; // 完成加载
+	console.log('Attempting to load more...');
+	if (!hasMore.value || isLoading.value) return;
+	myData.pageNo++;
+	try {
+		const result = await fetchReportsView({ pageSize: myData.pageSize, pageNo: myData.pageNo });
+		if (result && result.data && result.data.length) {
+			reportList.value.push(...result.data);
+			hasMore.value = result.hasMore;
+		} else {
+			hasMore.value = false;
+		}
+	} catch (e) {
+		console.error('Failed to load more:', e);
+	}
 };
 
-const onRefresh = async () => {
-    console.log('Refreshing data...');
-    if (myData.isLoading) {
-        return; // 如果正在加载，则直接返回
-    }
-    myData.isLoading = true; // 开始刷新数据
-    myData.loadingText = '刷新中...'; // 设置刷新文本
-    myData.pageNo = 1; // 重置为第一页
-    myData.hasMore = true; // 假设还有更多数据可加载
-    await loadMore(); // 调用加载更多的方法，但这次是为了刷新数据
-    myData.isLoading = false; // 完成刷新
-    uni.stopPullDownRefresh(); // 停止下拉刷新动画
-};
+// 获取banner
+const fetchBannerList = async () => {
+	try {
+		const result = await fetchBannerInfo({});
+		if (result && result.data && result.data.length) {
+			bannerList.value = result.data
+		} else {
+			// bannerList.value = []
+		}
+	} catch (e) {
+		console.error('Failed to banner info:', e);
+	}
+}
+
+// 行业列表
+const fetchReportCategoryList = async () => {
+	try {
+		const result = await fetchIndustries({});
+		if (result && result.data && result.data.length) {
+			reportCategoryList.value = result.data
+		} else {
+			reportCategoryList.value = []
+		}
+	} catch (e) {
+		console.error('Failed to industries:', e);
+	}
+}
+
+// 热门报告
+const fetchHotReportList = async () => {
+	try {
+		const result = await fetchHotReport({});
+		if (result && result.data && result.data.length) {
+			reportCategoryList.value = result.data
+		} else {
+			reportCategoryList.value = []
+		}
+	} catch (e) {
+		console.error('Failed to industries:', e);
+	}
+}
 
 onMounted(() => {
-    loadMore();
+	fetchBannerList();
+	fetchReportCategoryList();
+	fetchHotReportList();
+	loadMore();
 });
 </script>
 
@@ -214,10 +230,6 @@ onMounted(() => {
 				}
 			}
 		}
-	}
-	.load-more {
-		display: flex;
-		justify-content: center;
 	}
 }
 </style>
