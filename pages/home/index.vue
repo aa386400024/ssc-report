@@ -1,9 +1,10 @@
 <template>
 	<view class="page-container">
+		<u-button shape="circle" type="primary" size="large" text="登 录" @click="getApi"></u-button>
 		<u-search placeholder="输入报告关键词, 例如'人工智能'" shape="round" :disabled="true" :showAction="false" :color="textColor" @click="handleSearch"></u-search>
 
 		<view class="swiper">
-			<u-swiper indicator indicatorMode="dot" :height="100" :radius="8" :list="bannerList" @change="changeBanner" @click="clickBanner"></u-swiper>
+			<u-swiper indicator indicatorMode="dot" keyName="image" :height="100" :radius="8" :list="bannerList" @change="changeBanner" @click="clickBanner"></u-swiper>
 		</view>
 
 		<view class="tabs">
@@ -46,13 +47,24 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, toRefs } from 'vue';
+import { onMounted, reactive, ref, toRefs, computed } from 'vue';
 import { fetchReportsView, fetchBannerInfo, fetchIndustries, fetchHotReport } from '@/api/home';
 import InfiniteScroll from '@/components/InfiniteScroll/InfiniteScroll.vue';
+import { useAuthStore } from '@/stores/modules/auth'
+import { onLoad } from '@dcloudio/uni-app';
+
+const authStore = useAuthStore()
+
+const token = computed(() => authStore.token)
+
+interface CategoryItem {
+  name: string;
+  id: number;
+}
 
 const myData = reactive({
 	textColor: '#fff',
-	reportCategoryList: [{ name: '全部' }, { name: 'GPT' }, { name: '元宇宙' }, { name: '双碳' }, { name: '电商' }, { name: '短视频' }, { name: '房地产' }],
+	reportCategoryList: [{ name: '全部', id: 0 }] as CategoryItem[],
 	activeStyle: {
 		color: '#303133',
 		fontWeight: 'bold',
@@ -67,11 +79,7 @@ const myData = reactive({
 		paddingRight: '15px',
 		height: '36px'
 	},
-	bannerList: [
-		'https://cdn.uviewui.com/uview/swiper/swiper1.png',
-		'https://cdn.uviewui.com/uview/swiper/swiper2.png',
-		'https://cdn.uviewui.com/uview/swiper/swiper3.png'
-	] as string[],
+	bannerList: [] as { image: string, actionType: string, actionContent: string }[],
 	reportList: [
 		{ name: 'inviteRanking', icon: 'friends', title: '2023胖东来：幸福企业进化之路分享-混沌学院.pdf', path: '/pages_sub/invite-ranking/invite-ranking' },
 		{ name: 'readRanking', icon: 'read', title: '2024年ai营销应用解析报告-微易播.pdf', path: '/pages_sub/read-ranking/read-ranking' },
@@ -116,12 +124,17 @@ const handleCell = (name) => {
 
 const handleTabClick = () => {};
 
+const getApi = () => {
+	loadMore()
+}
+
 const loadMore = async () => {
 	console.log('Attempting to load more...');
-	if (!hasMore.value || isLoading.value) return;
+	// if (!hasMore.value || isLoading.value) return;
 	myData.pageNo++;
 	try {
 		const result = await fetchReportsView({ pageSize: myData.pageSize, pageNo: myData.pageNo });
+		console.log(result, 'result')
 		if (result && result.data && result.data.length) {
 			reportList.value.push(...result.data);
 			hasMore.value = result.hasMore;
@@ -136,39 +149,39 @@ const loadMore = async () => {
 // 获取banner
 const fetchBannerList = async () => {
 	try {
-		const result = await fetchBannerInfo({});
-		if (result && result.data && result.data.length) {
-			bannerList.value = result.data
-		} else {
-			// bannerList.value = []
+		const result = await fetchBannerInfo();
+		if (result && result.records && result.records.length) {
+			console.log(result.records, 'result.records')
+			bannerList.value = result.records;
 		}
 	} catch (e) {
-		console.error('Failed to banner info:', e);
+		console.error('Failed to fetch banner info:', e);
 	}
-}
+};
 
 // 行业列表
 const fetchReportCategoryList = async () => {
 	try {
 		const result = await fetchIndustries({});
-		if (result && result.data && result.data.length) {
-			reportCategoryList.value = result.data
+		if (result && result.records && result.records.length) {
+			reportCategoryList.value = [...reportCategoryList.value, ...result.records];
 		} else {
-			reportCategoryList.value = []
+			reportCategoryList.value = [{ name: '全部', id: 0 }];
 		}
 	} catch (e) {
-		console.error('Failed to industries:', e);
+		console.error('Failed to fetch industries:', e);
 	}
-}
+};
+
 
 // 热门报告
 const fetchHotReportList = async () => {
 	try {
 		const result = await fetchHotReport({});
 		if (result && result.data && result.data.length) {
-			reportCategoryList.value = result.data
+			// reportCategoryList.value = result.data
 		} else {
-			reportCategoryList.value = []
+			// reportCategoryList.value = []
 		}
 	} catch (e) {
 		console.error('Failed to industries:', e);
@@ -179,6 +192,10 @@ onMounted(() => {
 	fetchBannerList();
 	fetchReportCategoryList();
 	fetchHotReportList();
+	
+});
+
+onLoad(() => {
 	loadMore();
 });
 </script>

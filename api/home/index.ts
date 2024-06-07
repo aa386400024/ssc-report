@@ -14,11 +14,12 @@ export async function fetchReportsView(data: any): Promise<any> {
 }
 
 // banner
-export async function fetchBannerInfo(data: any): Promise<any> {
+export async function fetchBannerInfo(): Promise<any> {
 	const options: RequestOptions = {
 		url: 'banner/info',
 		method: 'GET',
 		data,
+		headers,
 		cloudFunction: false,
 	}
 	const response = await request(options)

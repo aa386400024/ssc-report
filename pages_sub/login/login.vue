@@ -47,22 +47,7 @@
 				<text class="dividing-line">OR</text>
 			</view>
 			<view class="login-by-wx-view">
-				<u-button
-					open-type="getPhoneNumber"
-					shape="circle"
-					type="primary"
-					size="large"
-					text="微信一键登录"
-					:customStyle="wxBtnCustomStyle"
-					@getphonenumber="loginByWeixinPhoneNumber"
-				></u-button>
-				<u-button
-					shape="circle"
-					type="primary"
-					size="large"
-					text="微信登录"
-					@click="loginByWeixin('login')"
-				></u-button>
+				<u-button shape="circle" type="primary" size="large" text="微信登录" :customStyle="wxBtnCustomStyle" @click="HandleLoginByWeixin('login')"></u-button>
 			</view>
 			<view class="agreement-view">
 				<u-checkbox-group v-model="loginForm.agreement" @change="checkboxChange">
@@ -83,9 +68,12 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, toRefs, defineExpose, ref, onMounted, computed, getCurrentInstance } from 'vue';
+import { reactive, toRefs, ref, onMounted, computed, getCurrentInstance } from 'vue';
 import { store, mutations } from '@/uni_modules/uni-id-pages/common/store.js';
 import { onLoad } from '@dcloudio/uni-app';
+import { useAuthStore } from '@/stores/modules/auth'
+
+const authStore = useAuthStore()
 
 const eventChannelRef = ref(null); // 创建一个响应式引用用于存储 eventChannel
 
@@ -152,7 +140,6 @@ onLoad(() => {
 		}
 	});
 });
-
 const loginSuccessFun = (data: any) => {
 	// 检查是否有指定跳转的页面
 	// 如果有，则执行原始页面的跳转逻辑，并终止当前函数的执行
@@ -239,45 +226,16 @@ const checkboxChange = (value: string) => {
 	loginForm.value.agreement = value.includes('agreement');
 };
 
-// 微信登录
-const loginByWeixin = (type: string) => {
+const HandleLoginByWeixin = (type?: string) => {
 	vk.userCenter.loginByWeixin({
-		data:{
+		data: {
 			type
 		},
-		success: (data) => {
-			vk.alert(data.msg);
-		}
-	});
-};
-
-/**
- * 通过微信手机号登录的方法
- * @param e - 微信手机号事件对象，其中包含加密数据和初始化向量
- */
-const loginByWeixinPhoneNumber = (e: WeixinPhoneNumberEvent) => {
-	// 打印事件对象，用于调试
-	console.log(e, 'eeee');
-
-	// 从事件对象的 detail 中解构出 encryptedData 和 iv
-	let { encryptedData, iv } = e.detail;
-
-	// 如果 encryptedData 或 iv 为空，则直接返回 false，不执行登录操作
-	if (!encryptedData || !iv) {
-		return false;
-	}
-
-	// 调用 vk.userCenter.loginByWeixinPhoneNumber 方法进行登录
-	vk.userCenter.loginByWeixinPhoneNumber({
-		data: {
-			encryptedData, // 加密数据
-			iv, // 初始化向量
-			encryptedKey: encryptedKey.value // 加密密钥
-		},
 		success: (data: any) => {
-			// 登录成功后的回调函数
-			vk.toast('登陆成功!'); // 弹出登录成功的提示
-
+			vk.alert(data.msg);
+			// authStore.setToken(data.token)
+			authStore.setToken('U617164587682bf3a67ffc41aca8e9dfa5ac02267cd20')
+			
 			// 延迟 1 秒后执行跳转操作，以便用户能看到登录成功的提示
 			setTimeout(() => {
 				// 跳转到首页或返回上一页
