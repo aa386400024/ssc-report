@@ -150,6 +150,7 @@ const loadMore = async () => {
 const fetchBannerList = async () => {
 	try {
 		const result = await fetchBannerInfo();
+		console.log(result, 'result-banner')
 		if (result && result.records && result.records.length) {
 			console.log(result.records, 'result.records')
 			bannerList.value = result.records;
@@ -163,6 +164,7 @@ const fetchBannerList = async () => {
 const fetchReportCategoryList = async () => {
 	try {
 		const result = await fetchIndustries({});
+		console.log(result, 'result-fetchReportCategoryList')
 		if (result && result.records && result.records.length) {
 			reportCategoryList.value = [...reportCategoryList.value, ...result.records];
 		} else {

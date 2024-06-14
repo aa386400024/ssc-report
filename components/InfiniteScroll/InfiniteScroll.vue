@@ -17,7 +17,7 @@
 
 		<!-- 没有更多内容的指示器 -->
 		<view v-if="!hasMore && showNoMoreText" class="no-more">
-			<text>没有更多内容了</text>
+			<text>{{noMoreText}}</text>
 		</view>
 	</scroll-view>
 </template>
@@ -46,6 +46,10 @@ const props = defineProps({
 	lowerThreshold: {
 		type: Number,
 		default: 50
+	},
+	noMoreText: {
+		type: String,
+		default: '没有更多内容了'
 	}
 });
 

@@ -96,10 +96,11 @@ const { cellGroups, ranking, hasMore, isLoading } = toRefs(myData);
 const isNumber = computed(() => !isNaN(parseFloat(myData.ranking)) && isFinite(myData.ranking));
 
 const loadMore = async () => {
-	if (!hasMore.value || isLoading.value) return;
-	isLoading.value = true;
+	// if (!hasMore.value || isLoading.value) return;
+	// isLoading.value = true;
 	try {
-		const { data, more } = await fetchInviteRank(myData.pageNo, myData.pageSize);
+		const result = await fetchInviteRank(myData.pageNo, myData.pageSize);
+		console.log(result, 'resultresultresult')
 		if (data.length) {
 			cellGroups.value = [...cellGroups.value, ...data];
 			myData.pageNo++;

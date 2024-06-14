@@ -3,7 +3,7 @@
 	<view class="user-nav padding-md">
 		<view class="profile-container" :style="{ paddingTop: offsetTop + 'px' }">
 			<view class="profile-section">
-				<u-avatar v-if="hasLogin && userInfo.avatar_file && userInfo.avatar_file.url" :src="userInfo.avatar_file.url"></u-avatar>
+				<u-avatar v-if="hasLogin && userInfo.avatarurl" :src="userInfo.avatarurl"></u-avatar>
 				<u-avatar size="50" v-else></u-avatar>
 				<view class="profile-info">
 					<view v-if="hasLogin" @click="toUserInfo">
@@ -11,7 +11,7 @@
 							{{ userInfo.nickname || userInfo.username || userInfo.mobile }}
 							<text class="iconfont icon-VIP1"></text>
 						</view>
-						<view class="login-prompt margin-top-xs">您还不是VIP会员！</view>
+						<view class="login-prompt margin-top-xs" v-if="userInfo.partner === 0">您还不是VIP会员！</view>
 					</view>
 					<view v-else @click="toLogin">
 						<text class="user-name">{{ $t('mine.notLogged') }}</text>
@@ -39,6 +39,8 @@
 <script lang="ts" setup>
 import { onMounted, reactive, toRefs, computed } from 'vue';
 import { store as storeOriginal, mutations } from '@/uni_modules/uni-id-pages/common/store.js';
+import { fetchMyProfile } from '@/api/my';
+
 const myData = reactive({
 	offsetTop: 0,
 	cellGroups: [
@@ -61,7 +63,7 @@ const myData = reactive({
 });
 const { offsetTop, cellGroups } = toRefs(myData);
 const { userInfo, hasLogin } = toRefs(storeOriginal);
-console.log(hasLogin, 'hasLoginhasLogin');
+
 // 跳转到登录页
 const toLogin = () => {
 	uni.navigateTo({
@@ -76,11 +78,22 @@ const toUserInfo = () => {
 	});
 };
 
+// 获取个人资料并更新用户信息
+const fetchMyProfileApi = async () => {
+	try {
+		const result = await fetchMyProfile({});
+		if (result.code === 0) {
+			Object.assign(userInfo.value, result.record);
+			mutations.setUserInfo(result.record);
+		}
+	} catch (e) {
+		console.error('Failed to fetch profile info:', e);
+	}
+};
+
 const handleCell = (name) => {
 	// 查找对应的cell项
-	console.log(name, "name")
 	const cellItem = myData.cellGroups.flatMap((group) => group.cells).find((cell) => cell.name === name);
-	console.log(cellItem, "cellItem.path")
 	if (cellItem && cellItem.path) {
 		uni.navigateTo({
 			url: cellItem.path
@@ -107,6 +120,7 @@ onMounted(async () => {
 	// #ifdef MP-WEIXIN
 	capsuleInfo();
 	// #endif
+	fetchMyProfileApi();
 });
 </script>
 

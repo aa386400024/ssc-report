@@ -1,16 +1,9 @@
 <template>
 	<view class="page-container">
-		<u-modal 
-			:show="isShowModal" 
-			:showCancelButton="true" 
-			:closeOnClickOverlay="true" 
-			@close="isShowModal = false" 
-			@cancel="isShowModal = false" 
-			@confirm="isShowModal = false"
-		>
+		<u-modal :show="isShowModal" :showCancelButton="true" :closeOnClickOverlay="true" @close="isShowModal = false" @cancel="isShowModal = false" @confirm="isShowModal = false">
 			<view class="slot-content">
-				<view v-if="modalType === 'vip'">1111</view>
-				<view v-else-if="modalType === 'invite'">2222</view>
+				<view v-if="modalType === 'vip'">VIP会员开通</view>
+				<view v-else-if="modalType === 'invite'">邀请好友</view>
 			</view>
 		</u-modal>
 		<view class="header-menu">
@@ -25,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, toRefs, computed } from 'vue';
+import { reactive, toRefs } from 'vue';
 import { exchangeCode } from '@/api/my';
 
 const myData = reactive({
@@ -38,13 +31,32 @@ const { inputVal, isShowModal, modalType } = toRefs(myData);
 
 // 兑换码兑换
 const fetchExchangeCode = async () => {
+	if (!inputVal.value) {
+		uni.showToast({
+			title: '请先填写正确的兑换码',
+			icon: 'none'
+		});
+		return;
+	}
 	try {
 		const result = await exchangeCode({ code: inputVal.value });
-		if (result && result.data && result.data.length) {
+		console.log(result, 'result=code')
+		if (result && result.data) {
+			const userVipDays = result.data.record.userVipDays;
+			const couponVipDays = result.data.record.couponVipDays;
+			uni.showToast({
+				title: `兑换成功，用户当前剩余VIP天数为${userVipDays}天，本次兑换了${couponVipDays}天`,
+				icon: 'none'
+			});
+			inputVal.value = '';
 		} else {
+			throw new Error('Invalid response');
 		}
-	} catch (e) {
-		console.error('Failed to industries:', e);
+	} catch (error) {
+		uni.showToast({
+			title: error.data?.msg || '您输入的兑换码有误，请重新输入！',
+			icon: 'none'
+		});
 	}
 };
 

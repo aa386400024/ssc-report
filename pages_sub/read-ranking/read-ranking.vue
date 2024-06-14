@@ -2,7 +2,7 @@
 	<view class="page-container">
 		<view class="top-bar padding-left-xl">
 			<image class="avatar" src=""></image>
-			<text class="report-info">本月阅读{{ count }}份研报，排名第{{ rank }}位</text>
+			<text class="report-info">本月阅读{{ count }}份研报，排名第{{ rank + 1 }}位</text>
 		</view>
 		<view class="gap"></view>
 		<view class="read-ranking">
@@ -10,13 +10,13 @@
 				<u-cell v-for="(cell, index) in cellGroups" :key="`group-0-cell-${index}`" @click="() => handleCell(cell.name)">
 					<template #title>
 						<view class="title-view">
-							<text class="index">{{index + 1}}</text>
+							<text class="index">{{ index + 1 }}</text>
 							<u-avatar class="avatar" :src="cell.avatarSrc"></u-avatar>
 							<text class="title">{{ cell.title }}</text>
 						</view>
 					</template>
 					<template #value>
-						<text class="u-slot-value">{{cell.readReportCount}}份</text>
+						<text class="u-slot-value">{{ cell.readReportCount }}份</text>
 					</template>
 				</u-cell>
 			</u-cell-group>
@@ -25,17 +25,13 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, toRefs, computed } from 'vue';
+import { reactive, toRefs, onMounted } from 'vue';
+import { fetchDownloadRank } from '@/api/my';
 
 const myData = reactive({
-	count: 22,
-	rank: 15464,
-	cellGroups: [
-		{ name: 'inviteRanking', icon: 'friends', title: '禅一', readReportCount: '25065', avatarSrc: 'https://uview-plus.jiangruyi.com/h5/static/uview/album/1.jpg', path: '/pages_sub/invite-ranking/invite-ranking' },
-		{ name: 'readRanking', icon: 'read', title: '文文', readReportCount: '18896', avatarSrc: 'https://uview-plus.jiangruyi.com/h5/static/uview/album/2.jpg', path: '/pages_sub/read-ranking/read-ranking' },
-		{ name: 'wechatGroups', icon: 'wechat', title: '张建', readReportCount: '16562', avatarSrc: 'https://uview-plus.jiangruyi.com/h5/static/uview/album/3.jpg', path: '/pages_sub/wechat-groups/wechat-groups' },
-		{ name: 'vipCode', icon: 'vip', title: '晶华', readReportCount: '14002', avatarSrc: 'https://uview-plus.jiangruyi.com/h5/static/uview/album/5.jpg', path: '/pages_sub/vip-code/vip-code' }
-	]
+	count: null,
+	rank: null,
+	cellGroups: []
 });
 
 const { count, rank, cellGroups } = toRefs(myData);
@@ -43,16 +39,40 @@ const { count, rank, cellGroups } = toRefs(myData);
 const handleCell = (name: string) => {
 	// 查找对应的cell项
 	console.log(name, 'name');
-	const cellItem = myData.cellGroups.flatMap((group) => group.cells).find((cell) => cell.name === name);
+	const cellItem = myData.cellGroups.find((cell) => cell.name === name);
 	console.log(cellItem, 'cellItem.path');
 	if (cellItem && cellItem.path) {
 		uni.navigateTo({
-			url: `/pages_sub/report-detail/report-detail?id=${cellItem}` // 将参数拼接在URL中
+			url: `/pages_sub/report-detail/report-detail?id=${cellItem.id}` // 将参数拼接在URL中
 		});
 	} else {
 		console.error('未找到对应的路由配置');
 	}
 };
+
+const fetchDownloadRankApi = async () => {
+	try {
+		const result = await fetchDownloadRank({});
+		console.log(result, 'result-rank');
+		if (result.code === 0 && result.record) {
+			myData.count = result.record.downloadCount;
+			myData.rank = result.record.rank;
+			myData.cellGroups = result.record.ranks.map((rank, index) => ({
+				name: `rank-${index}`,
+				title: rank.nickName,
+				readReportCount: rank.downloadCount,
+				avatarSrc: rank.avatarUrl,
+				path: `/pages_sub/report-detail/report-detail?id=${rank.id}`
+			}));
+		}
+	} catch (e) {
+		console.error('Failed to fetch profile info:', e);
+	}
+};
+
+onMounted(async () => {
+	fetchDownloadRankApi();
+});
 </script>
 
 <style lang="scss" scoped>

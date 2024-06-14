@@ -6,6 +6,7 @@
 			:hasMore="hasMore"
 			:isLoading="isLoading"
 			:enableRefresh="false"
+			:noMoreText="'你还没有收藏过噢(#^.^#)'"
 			@update:isLoading="updateIsLoading"
 		>
 			<u-cell-group :border="false" :customStyle="{ fontWeight: 'bold' }">
@@ -16,10 +17,10 @@
 						</view>
 						<view class="info">
 							<text class="iconfont icon-mima">pdf</text>
-							<text>22.23MB</text>
-							<text>244页</text>
-							<text>混沌学院</text>
-							<text>2024-04-04</text>
+							<text>{{ cell.size }}MB</text>
+							<text>{{ cell.pages }}页</text>
+							<text>{{ cell.author }}</text>
+							<text>{{ cell.date }}</text>
 						</view>
 					</template>
 					<template #icon>
@@ -33,16 +34,11 @@
 
 <script setup lang="ts">
 import { reactive, toRefs, onMounted } from 'vue';
-import { fetchFavrites } from '@/api/my';
+import { fetchMyCollections } from '@/api/my';
 import InfiniteScroll from '@/components/InfiniteScroll/InfiniteScroll.vue';
 
 const myData = reactive({
-	cellGroups: [
-		{ name: 'inviteRanking', icon: 'friends', title: '2023胖东来：幸福企业进化之路分享-混沌学院.pdf', path: '/pages_sub/invite-ranking/invite-ranking' },
-		{ name: 'readRanking', icon: 'read', title: '2024年ai营销应用解析报告-微易播.pdf', path: '/pages_sub/read-ranking/read-ranking' },
-		{ name: 'wechatGroups', icon: 'wechat', title: '2024年年度天猫消费趋势报告-天猫.pdf', path: '/pages_sub/wechat-groups/wechat-groups' },
-		{ name: 'vipCode', icon: 'vip', title: '2024全球人才趋势报告：在机器增强的世界释放员工潜力-美世咨询.pdf', path: '/pages_sub/vip-code/vip-code' }
-	],
+	cellGroups: [],
 	pageNo: 1,
 	pageSize: 10,
 	hasMore: true,
@@ -55,11 +51,20 @@ const loadMore = async () => {
 	if (!hasMore.value || isLoading.value) return;
 	isLoading.value = true;
 	try {
-		const { data, more } = await fetchFavrites(myData.pageNo, myData.pageSize);
-		if (data.length) {
-			cellGroups.value = [...cellGroups.value, ...data];
+		const { code, record } = await fetchMyCollections(myData.pageNo, myData.pageSize);
+		if (code === 0 && record && record.reports.length) {
+			const newCells = record.reports.map((report) => ({
+				name: `report-${report.id}`,
+				title: report.title,
+				size: report.size,
+				pages: report.pages,
+				author: report.author,
+				date: report.date,
+				icon: 'pdf'
+			}));
+			cellGroups.value = [...cellGroups.value, ...newCells];
 			myData.pageNo++;
-			hasMore.value = more;
+			hasMore.value = record.hasNext;
 		} else {
 			hasMore.value = false;
 		}
@@ -76,9 +81,9 @@ const updateIsLoading = (newLoading) => {
 
 const handleCell = (name: string) => {
 	const cellItem = cellGroups.value.find((cell) => cell.name === name);
-	if (cellItem && cellItem.path) {
+	if (cellItem) {
 		uni.navigateTo({
-			url: `/pages_sub/report-detail/report-detail?id=${cellItem.path}`
+			url: `/pages_sub/report-detail/report-detail?id=${cellItem.name}`
 		});
 	} else {
 		console.error('未找到对应的路由配置');
