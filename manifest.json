@@ -68,22 +68,7 @@
                 }
             }
         },
-        "nativePlugins" : {
-            "syczuan-pdfview" : {
-                "__plugin_info__" : {
-                    "name" : "Android iOS PDF阅读器",
-                    "description" : "Android iOS pdf阅读器，无其他额外UI，自定义程度高，可根据参数配置实现付费阅读等功能，支持本地pdf，网络pdf自动下载、自定义保存位置等功能",
-                    "platforms" : "Android,iOS",
-                    "url" : "https://ext.dcloud.net.cn/plugin?id=13955",
-                    "android_package_name" : "com.sscreport.app",
-                    "ios_bundle_id" : "com.sscreport.app",
-                    "isCloud" : true,
-                    "bought" : 1,
-                    "pid" : "13955",
-                    "parameters" : {}
-                }
-            }
-        }
+        "nativePlugins" : {}
     },
     "quickapp" : {},
     "mp-weixin" : {
