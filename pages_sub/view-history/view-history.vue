@@ -15,7 +15,8 @@
 							<view class="title">{{ cell.title }}</view>
 						</view>
 						<view class="info">
-							<text class="iconfont icon-mima">{{ cell.filetype }}</text>
+							<image src="/static/file/file_type_pdf.png" style="width: 11px; height: 13px;"></image>
+							<text>{{ cell.filetype }}</text>
 							<text>{{ cell.filesize }}MB</text>
 							<text>{{ cell.pages }}页</text>
 							<text>{{ cell.comefrom || cell.industries }}</text>

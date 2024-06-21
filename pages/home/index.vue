@@ -25,12 +25,13 @@
 						<view class="title-view">
 							<view class="title">{{ cell.title }}</view>
 							<view class="right-icon">
-								<text class="iconfont icon-mima"></text>
-								<text class="iconfont icon-mima"></text>
+								<image src="/static/home/flag_hot.png" style="width: 20px; height: 20px;"></image>
+								<image src="/static/home/flag_new.png" style="width: 20px; height: 20px;"></image>
 							</view>
 						</view>
 						<view class="info">
-							<text class="iconfont icon-mima">pdf</text>
+							<image src="/static/file/file_type_pdf.png" style="width: 11px; height: 13px;"></image>
+							<text>pdf</text>
 							<text>22.23MB</text>
 							<text>244页</text>
 							<text>混沌学院</text>
