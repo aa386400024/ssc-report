@@ -10,7 +10,6 @@
 		<view class="tabs">
 			<u-tabs :list="reportCategoryList" :activeStyle="activeStyle" :inactiveStyle="inactiveStyle" :itemStyle="itemStyle" @click="handleTabClick"></u-tabs>
 		</view>
-
 		<InfiniteScroll
 			class="report-view"
 			:loadMoreMethod="loadMore"
@@ -25,17 +24,20 @@
 						<view class="title-view">
 							<view class="title">{{ cell.title }}</view>
 							<view class="right-icon">
-								<image src="/static/home/flag_hot.png" style="width: 20px; height: 20px;"></image>
-								<image src="/static/home/flag_new.png" style="width: 20px; height: 20px;"></image>
+								<image v-if="cell.hot" src="/static/home/flag_hot.png" style="width: 20px; height: 20px"></image>
+								<image v-if="cell.isNew" src="/static/home/flag_new.png" style="width: 20px; height: 20px"></image>
 							</view>
 						</view>
 						<view class="info">
-							<image src="/static/file/file_type_pdf.png" style="width: 11px; height: 13px;"></image>
-							<text>pdf</text>
-							<text>22.23MB</text>
-							<text>244页</text>
-							<text>混沌学院</text>
-							<text>2024-04-04</text>
+							<image v-if="cell.fileType === 'pdf'" src="/static/file/file_type_pdf.png" style="width: 11px; height: 13px"></image>
+							<image v-if="cell.fileType === 'doc'" src="/static/file/file_type_doc.png" style="width: 11px; height: 13px"></image>
+							<image v-if="cell.fileType === 'ppt'" src="/static/file/file_type_ppt.png" style="width: 11px; height: 13px"></image>
+							<text>{{ cell.fileType }}</text>
+							<text>{{ computeFileSize(cell.filesize) }}</text>
+							<text>{{ cell.pages }}页</text>
+							<text>{{ cell.industry }}</text>
+							<text>{{ cell.comeFrom }}</text>
+							<text>{{ cell.time }}</text>
 						</view>
 					</template>
 					<template #icon>
@@ -51,16 +53,31 @@
 import { onMounted, reactive, ref, toRefs, computed } from 'vue';
 import { fetchReportsView, fetchBannerInfo, fetchIndustries, fetchHotReport } from '@/api/home';
 import InfiniteScroll from '@/components/InfiniteScroll/InfiniteScroll.vue';
-import { useAuthStore } from '@/stores/modules/auth'
+import { useAuthStore } from '@/stores/modules/auth';
 import { onLoad } from '@dcloudio/uni-app';
 
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 
-const token = computed(() => authStore.token)
+const token = computed(() => authStore.token);
 
 interface CategoryItem {
-  name: string;
-  id: number;
+	name: string;
+	id: number;
+}
+
+interface ReportItem {
+	name: string;
+	icon: string;
+	title: string;
+	path: string;
+	isNew: boolean;
+	hot: boolean;
+	fileType: string;
+	filesize: number;
+	pages: number;
+	industry: string;
+	comeFrom: string;
+	time: string;
 }
 
 const myData = reactive({
@@ -80,17 +97,37 @@ const myData = reactive({
 		paddingRight: '15px',
 		height: '36px'
 	},
-	bannerList: [] as { image: string, actionType: string, actionContent: string }[],
+	bannerList: [] as { image: string; actionType: string; actionContent: string }[],
 	reportList: [
-		{ name: 'inviteRanking', icon: 'friends', title: '2023胖东来：幸福企业进化之路分享-混沌学院.pdf', path: '/pages_sub/invite-ranking/invite-ranking' },
-		{ name: 'readRanking', icon: 'read', title: '2024年ai营销应用解析报告-微易播.pdf', path: '/pages_sub/read-ranking/read-ranking' },
-		{ name: 'wechatGroups', icon: 'wechat', title: '2024年年度天猫消费趋势报告-天猫.pdf', path: '/pages_sub/wechat-groups/wechat-groups' },
-		{ name: 'vipCode', icon: 'vip', title: '2024全球人才趋势报告：在机器增强的世界释放员工潜力-美世咨询.pdf', path: '/pages_sub/vip-code/vip-code' },
-		{ name: 'inviteRanking', icon: 'friends', title: '2023胖东来：幸福企业进化之路分享-混沌学院.pdf', path: '/pages_sub/invite-ranking/invite-ranking' },
-		{ name: 'readRanking', icon: 'read', title: '2024年ai营销应用解析报告-微易播.pdf', path: '/pages_sub/read-ranking/read-ranking' },
-		{ name: 'wechatGroups', icon: 'wechat', title: '2024年年度天猫消费趋势报告-天猫.pdf', path: '/pages_sub/wechat-groups/wechat-groups' },
-		{ name: 'vipCode', icon: 'vip', title: '2024全球人才趋势报告：在机器增强的世界释放员工潜力-美世咨询.pdf', path: '/pages_sub/vip-code/vip-code' }
-	],
+		{
+			name: 'inviteRanking',
+			icon: 'friends',
+			title: '2023胖东来：幸福企业进化之路分享-混沌学院.pdf',
+			path: '/pages_sub/invite-ranking/invite-ranking',
+			isNew: true,
+			hot: false,
+			fileType: 'pdf',
+			filesize: 23345,
+			pages: 20,
+			industry: '教育',
+			comeFrom: '混沌学院',
+			time: '2024-04-04'
+		},
+		{
+			name: 'readRanking',
+			icon: 'read',
+			title: '2024年ai营销应用解析报告-微易播.pdf',
+			path: '/pages_sub/read-ranking/read-ranking',
+			isNew: false,
+			hot: true,
+			fileType: 'doc',
+			filesize: 12345,
+			pages: 15,
+			industry: '科技',
+			comeFrom: '微易播',
+			time: '2024-04-04'
+		}
+	] as ReportItem[],
 	pageNo: 1,
 	pageSize: 10,
 	hasMore: true,
@@ -126,8 +163,19 @@ const handleCell = (name) => {
 const handleTabClick = () => {};
 
 const getApi = () => {
-	loadMore()
-}
+	loadMore();
+};
+
+const computeFileSize = (size: number) => {
+	// 用于计算文件大小的函数
+	if (size < 1024) {
+		return size + ' B';
+	} else if (size < 1024 * 1024) {
+		return (size / 1024).toFixed(2) + ' KB';
+	} else {
+		return (size / (1024 * 1024)).toFixed(2) + ' MB';
+	}
+};
 
 const loadMore = async () => {
 	console.log('Attempting to load more...');
@@ -135,9 +183,9 @@ const loadMore = async () => {
 	myData.pageNo++;
 	try {
 		const result = await fetchReportsView({ pageSize: myData.pageSize, pageNo: myData.pageNo });
-		console.log(result, 'result')
+		console.log(result, 'result');
 		if (result && result.data && result.data.length) {
-			reportList.value.push(...result.data);
+			// reportList.value.push(...result.data);
 			hasMore.value = result.hasMore;
 		} else {
 			hasMore.value = false;
@@ -151,9 +199,9 @@ const loadMore = async () => {
 const fetchBannerList = async () => {
 	try {
 		const result = await fetchBannerInfo();
-		console.log(result, 'result-banner')
+		console.log(result, 'result-banner');
 		if (result && result.records && result.records.length) {
-			console.log(result.records, 'result.records')
+			console.log(result.records, 'result.records');
 			bannerList.value = result.records;
 		}
 	} catch (e) {
@@ -165,7 +213,7 @@ const fetchBannerList = async () => {
 const fetchReportCategoryList = async () => {
 	try {
 		const result = await fetchIndustries({});
-		console.log(result, 'result-fetchReportCategoryList')
+		console.log(result, 'result-fetchReportCategoryList');
 		if (result && result.records && result.records.length) {
 			reportCategoryList.value = [...reportCategoryList.value, ...result.records];
 		} else {
@@ -175,7 +223,6 @@ const fetchReportCategoryList = async () => {
 		console.error('Failed to fetch industries:', e);
 	}
 };
-
 
 // 热门报告
 const fetchHotReportList = async () => {
@@ -189,13 +236,12 @@ const fetchHotReportList = async () => {
 	} catch (e) {
 		console.error('Failed to industries:', e);
 	}
-}
+};
 
 onMounted(() => {
 	fetchBannerList();
 	fetchReportCategoryList();
 	fetchHotReportList();
-	
 });
 
 onLoad(() => {

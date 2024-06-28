@@ -1,12 +1,16 @@
 <template>
 	<view class="page-container">
+		<u-toast ref="uToastRef"></u-toast>
+		<view>
+			<u-modal :show="showModal" :content="modalContent" :showCancelButton="true" confirmText="复制微信" @confirm="confirm" :asyncClose="true"></u-modal>
+		</view>
 		<view class="question-analysis">
 			<u-subsection fontSize="14" mode="button" :list="subsectionList" :current="currentSubsectionIndex" @change="sectionChange"></u-subsection>
 		</view>
 		<view class="report-view">
 			<!-- 微信群组列表 -->
 			<u-cell-group v-if="currentSubsectionIndex === 0" :border="false" :customStyle="{}" class="cell-group-container">
-				<u-cell v-for="(cell, index) in cellGroups['wxGroup']" :key="`group-0-cell-${index}`" @click="() => handleCell(cell.name)">
+				<u-cell v-for="(cell, index) in cellGroups['wxGroup']" :key="`group-0-cell-${index}`" @click="() => handleWxGroupCell(cell.name)">
 					<template #title>
 						<view class="title-view">
 							<view class="title">{{ cell.name }}</view>
@@ -66,6 +70,8 @@ import { fetchFindHotsReport } from '@/api/discover';
 import { onLoad } from '@dcloudio/uni-app';
 
 const myData = reactive({
+	showModal: false,
+	modalContent: '添加工作人员微信 sscbg2020，并回复 “城市” 进群了解更多内容！',
 	subsectionList: [{ name: '微信群组' }, { name: '热点推荐' }] as { name: string }[],
 	currentSubsectionIndex: 0,
 	cellGroups: {
@@ -163,7 +169,8 @@ const myData = reactive({
 	hasMore: true,
 	isLoading: false
 });
-const { subsectionList, currentSubsectionIndex, cellGroups, isLoading, loadingText, hasMore } = toRefs(myData);
+const uToastRef = ref(null);
+const { subsectionList, currentSubsectionIndex, cellGroups, isLoading, loadingText, hasMore, showModal, modalContent } = toRefs(myData);
 
 // 分段器切换事件
 const sectionChange = (index: number) => {
@@ -186,6 +193,36 @@ const loadMore = async () => {
 	} finally {
 		isLoading.value = false;
 	}
+};
+
+const confirm = () => {
+	uni.setClipboardData({
+		data: 'sscbg2020',
+		showToast: false,
+		success: () => {
+			showModal.value = false;
+			if (uToastRef.value) {
+				uToastRef.value.show({
+					message: '复制运营微信号成功',
+					icon: 'success',
+					duration: 2000
+				});
+			}
+		},
+		fail: () => {
+			if (uToastRef.value) {
+				uToastRef.value.show({
+					message: '复制失败',
+					icon: 'none',
+					duration: 2000
+				});
+			}
+		}
+	});
+};
+
+const handleWxGroupCell = () => {
+	showModal.value = true;
 };
 
 const handleCell = (name: any) => {
