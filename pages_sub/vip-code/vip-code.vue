@@ -12,8 +12,12 @@
 			</view>
 			<u-button @click="handleToExchangeBtn" shape="circle" color="#0055ff" text="兑换"></u-button>
 		</view>
-		<view class="open-vip-view margin-top-lg" @click="handleOpenVipBtn"></view>
-		<view class="open-vip-view margin-top-lg" @click="handleInvitefriendsBtn"></view>
+		<view class="image-container margin-top-lg" @click="handleOpenVipBtn">
+			<view class="open-vip-view"></view>
+		</view>
+		<view class="image-container margin-top-lg" @click="handleInvitefriendsBtn">
+			<view class="open-invite-view"></view>
+		</view>
 	</view>
 </template>
 
@@ -79,6 +83,9 @@ const handleInvitefriendsBtn = () => {
 </script>
 
 <style lang="scss" scoped>
+.page-container {
+	padding: 20rpx;
+}
 .header-menu {
 	display: flex;
 	justify-content: space-between;
@@ -87,9 +94,24 @@ const handleInvitefriendsBtn = () => {
 		min-width: 500rpx;
 	}
 }
-.open-vip-view {
-	height: 190rpx;
+.image-container {
+	width: 100%;
+	height: 180rpx;
 	border-radius: 20rpx;
-	background: url('https://mp-ab8b269c-c52c-4795-a674-3973206ce16b.cdn.bspapp.com/my/join-vip.png') no-repeat center center / cover;
+	overflow: hidden; /* 确保子容器的圆角效果 */
+	position: relative;
+}
+.open-vip-view, .open-invite-view {
+	width: 100%;
+	height: 100%;
+	background-size: 105%; /* 调整背景图片的大小 */
+	background-position: center;
+	border-radius: 20rpx; /* 保持圆角效果 */
+}
+.open-vip-view {
+	background-image: url('../../static/my/join-vip.png');
+}
+.open-invite-view {
+	background-image: url('../../static/my/yaoqing.png');
 }
 </style>

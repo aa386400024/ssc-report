@@ -27,7 +27,7 @@
 				<u-cell-group :border="false" :customStyle="{ fontWeight: 'bold' }">
 					<u-cell v-for="(cell, cellIndex) in group.cells" :key="`cell-${cellIndex}`" @click="() => handleCell(cell.name)" :title="cell.title">
 						<template #icon>
-							<text :class="`iconfont ${cell.icon}`"></text>
+							<image :src="`/static/my/${cell.icon}.png`" style="width: 22px; height: 22px; margin-right: 10px" />
 						</template>
 					</u-cell>
 				</u-cell-group>
@@ -46,17 +46,17 @@ const myData = reactive({
 	cellGroups: [
 		{
 			cells: [
-				{ name: 'inviteRanking', icon: 'friends', title: '邀请好友排名', path: '/pages_sub/invite-ranking/invite-ranking' },
-				{ name: 'readRanking', icon: 'read', title: '阅读排名', path: '/pages_sub/read-ranking/read-ranking' },
-				{ name: 'wechatGroups', icon: 'wechat', title: '微信群组', path: '/pages_sub/wechat-groups/wechat-groups' },
-				{ name: 'vipCode', icon: 'vip', title: 'VIP兑换码', path: '/pages_sub/vip-code/vip-code' }
+				{ name: 'inviteRanking', icon: 'my_irank', title: '邀请好友排名', path: '/pages_sub/invite-ranking/invite-ranking' },
+				{ name: 'readRanking', icon: 'my_drank', title: '阅读排名', path: '/pages_sub/read-ranking/read-ranking' },
+				{ name: 'wechatGroups', icon: 'groups_icon', title: '微信群组', path: '/pages_sub/wechat-groups/wechat-groups' },
+				{ name: 'vipCode', icon: 'icon_mine_exchange', title: 'VIP兑换码', path: '/pages_sub/vip-code/vip-code' }
 			]
 		},
 		{
 			cells: [
-				{ name: 'favorites', icon: 'favorite', title: '我的收藏', path: '/pages_sub/favorites/favorites' },
-				{ name: 'historyView', icon: 'history', title: '查看历史', path: '/pages_sub/view-history/view-history' },
-				{ name: 'downloadHistory', icon: 'download', title: '下载历史', path: '/pages_sub/download-history/download-history' }
+				{ name: 'favorites', icon: 'my_collect', title: '我的收藏', path: '/pages_sub/favorites/favorites' },
+				{ name: 'historyView', icon: 'my_history', title: '查看历史', path: '/pages_sub/view-history/view-history' },
+				{ name: 'downloadHistory', icon: 'my_download', title: '下载历史', path: '/pages_sub/download-history/download-history' }
 			]
 		}
 	]

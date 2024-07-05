@@ -1,6 +1,6 @@
 <template>
 	<view class="page-container">
-		<u-button shape="circle" type="primary" size="large" text="登 录" @click="getApi"></u-button>
+		<!-- <u-button shape="circle" type="primary" size="large" text="登 录" @click="getApi"></u-button> -->
 		<u-search placeholder="输入报告关键词, 例如'人工智能'" shape="round" :disabled="true" :showAction="false" :color="textColor" @click="handleSearch"></u-search>
 
 		<view class="swiper">
